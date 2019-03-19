@@ -46,7 +46,8 @@ form {
     background-color:white;
     height:570px;
     width:290px;
-    padding:20px;
-    margin:20px;
+    /* padding:20px; */
+    margin-top: 20px;
+    justify-content: center;
 }
 
