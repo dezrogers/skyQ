@@ -22,3 +22,31 @@ form {
     background-color: white;
     padding: 20px;
 }
+
+#eventContainer {
+    float: left;
+    background-color:white;
+    height:275px;
+    width:775px;
+    padding:20px;
+    margin-top:20px;
+    margin-bottom:10px;
+}
+#weatherContainer {
+    float: left;
+    background-color:white;
+    height:275px;
+    width:775px;
+    padding:20px;
+    margin-top:10px;
+    margin-bottom:20px;
+}
+#rssContainer {
+    float: right;
+    background-color:white;
+    height:570px;
+    width:290px;
+    padding:20px;
+    margin:20px;
+}
+
