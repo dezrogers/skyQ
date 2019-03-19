@@ -1,3 +1,64 @@
+// <<<<<<< HEAD
+// =======
+//
+// // api call - predict the sky
+//
+// // api call - geolocation
+//
+// // on submit -- convery city to lat/lon and pull relevant data from predict the sky
+//
+// // rss with up to date nasa news?
+//
+// // var with date to pass into api parameters
+// $('#submitButton').on('click', function() {
+//   var date = $('#date').val().toString();
+//   var date2 = moment(date).format('MM/DD/YYYY');
+//   console.log(date);
+//   console.log(date2);
+//   nearEarth(date);
+//   moonPhase(date2);
+//
+// // this totally works w00t
+// var queryURL = "http://api.open-notify.org/iss-now.json";
+//
+// $.ajax({
+//   url: queryURL,
+//   method: "GET"
+// }).then(function(response) {
+//   console.log(response);
+// });
+//
+// // moonphase api call --- populate into table?
+// function moonPhase() {
+// var moonPhaseURL = "https://api.usno.navy.mil/moon/phase?date=" + date2 + "&nump=4";
+//
+// $.ajax({
+//   url: moonPhaseURL,
+//   method: "GET"
+// }).then(function(response) {
+//   console.log(response);
+// });
+// }
+//
+// // Near Earth Objects NASA api key: w6WzGfIJHpH3CYm2kyvIAuej0NwIjBmbh1ywubzT
+// function nearEarth() {
+// var neoWSURL = "https://api.nasa.gov/neo/rest/v1/feed?start_date=" + date + "&api_key=w6WzGfIJHpH3CYm2kyvIAuej0NwIjBmbh1ywubzT";
+//
+// $.ajax({
+//   url: neoWSURL,
+//   method: "GET"
+// }).then(function(response) {
+//   console.log(response);
+// });
+// }
+//
+// // on click closing tag. dont fuck with this
+// })
+//
+// $("#submitButton").on("click", function(e) {
+//     e.preventDefault();
+//     window.location.href = "main.html";
+// >>>>>>> master
 
 $(document).ready(function(){
 
@@ -48,20 +109,17 @@ $(document).ready(function(){
 
     // display information on front page "default value"
     function display() {
-      mapsQueryURL = "https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat="+lat+"&lon="+lon+"";
+        mapsQueryURL = "https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat="+lat+"&lon="+lon+"";
 
-      $.ajax({
-        url: mapsQueryURL,
-        method: "GET"
-      }).then(function(mapsResponse) {
-        console.log(mapsResponse);
-        postcode = mapsResponse.address.postcode;
-        console.log(postcode);
-        $("#location").attr("value", postcode);
-      })
-
-      console.log(lat);
-      console.log(lon);
+        $.ajax({
+          url: mapsQueryURL,
+          method: "GET"
+        }).then(function(mapsResponse) {
+          console.log(mapsResponse);
+          postcode = mapsResponse.address.postcode;
+          console.log(postcode);
+          $("#location").attr("value", postcode);
+        })
     }
 
     setTimeout(display, 10000);
@@ -70,22 +128,20 @@ $(document).ready(function(){
     // EVENTS
     // ---------------------------------------------------------
     // var with date to pass into api parameters
-    $('#submitButton').on('click', function() {
+    $('#submitButton').on('click', function(e) {
           e.preventDefault();
-          window.location.href = "main.html";
+          // window.location.href = "main.html";
 
           var date = $('#date').val().toString();
           var date2 = moment(date).format('MM/DD/YYYY');
           console.log(date);
           console.log(date2);
-          nearEarth(date);
-          moonPhase(date2);
 
           // this totally works w00t
-          var queryURL = "http://api.open-notify.org/iss-now.json";
+          var queryISSURL = "http://api.open-notify.org/iss-now.json";
 
           $.ajax({
-            url: queryURL,
+            url: queryISSURL,
             method: "GET"
           }).then(function(response) {
             console.log(response);
@@ -103,6 +159,9 @@ $(document).ready(function(){
             });
           }
 
+          moonPhase(date2);
+
+
           // Near Earth Objects NASA api key: w6WzGfIJHpH3CYm2kyvIAuej0NwIjBmbh1ywubzT
           function nearEarth() {
             var neoWSURL = "https://api.nasa.gov/neo/rest/v1/feed?start_date=" + date + "&api_key=w6WzGfIJHpH3CYm2kyvIAuej0NwIjBmbh1ywubzT";
@@ -115,7 +174,9 @@ $(document).ready(function(){
             });
           }
 
-          // if user deny location lat and lon undefined queryURL is input val
+          nearEarth(date);
+
+          // if user denies location queryURL is user input value
           if ((lat || lon) !== undefined) {
               weatherQueryURL = "https://api.openweathermap.org/data/2.5/weather?lat="+lat+"&lon="+lon+"&appid="+weatherAPIKey;
           } else {
