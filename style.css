@@ -1,0 +1,52 @@
+body {
+    background-color: black;
+}
+
+h1 {
+    text-align: center;
+    background-color: white;
+}
+
+h2 {
+    color: white;
+}
+
+#formcontainer {
+    margin-top: 125px;
+}
+
+form {
+    height: 300px;
+    width: 400px;
+    margin: auto;
+    background-color: white;
+    padding: 20px;
+}
+
+#eventContainer {
+    float: left;
+    background-color:white;
+    height:275px;
+    width:775px;
+    padding:20px;
+    margin-top:20px;
+    margin-bottom:10px;
+}
+#weatherContainer {
+    float: left;
+    background-color:white;
+    height:275px;
+    width:775px;
+    padding:20px;
+    margin-top:10px;
+    margin-bottom:20px;
+}
+#rssContainer {
+    float: right;
+    background-color:white;
+    height:570px;
+    width:290px;
+    padding:20px;
+    margin:20px;
+}
+
