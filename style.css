@@ -1,0 +1,24 @@
+body {
+    background-color: black;
+}
+
+h1 {
+    text-align: center;
+    background-color: white;
+}
+
+h2 {
+    color: white;
+}
+
+#formcontainer {
+    margin-top: 125px;
+}
+
+form {
+    height: 300px;
+    width: 400px;
+    margin: auto;
+    background-color: white;
+    padding: 20px;
+}
