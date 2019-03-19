@@ -1,36 +1,19 @@
 // api call - predict the sky
-/* var queryURL = "http://api.predictthesky.org/events/all"
 
-$.ajax({
-    url: queryURL,
-    method: "GET"
-  }).then(function(response) {
-    console.log(response);
-  });
- */
 // api call - geolocation
 
 // on submit -- convery city to lat/lon and pull relevant data from predict the sky
 
 // rss with up to date nasa news?
 
-/* var predictTheSkyUrl = "http://www.adamretter.org.uk/spaceapps/space.xql?lat=latitude&lng=longitude&format=json&jsonp=?&nextClear=true";
-   var predictTheSkyUrl = "http://www.adamretter.org.uk/spaceapps/space.xql?lat=50.7218&lng=-3.5336&format=json&jsonp=getNextClearEvent&nextClear=true";
-   var predictTheSkyUrl = "http://api.predictthesky.org/events/all/?lat=50.7218&lng=-3.5336&format=json";
-   var predictTheSkyUrl = "http://api.predictthesky.org/events/all/?lat=50.7218&lng=-3.5336";
-
-// function getNextEventAndWeather(latitude, longitude) {
-//     var urlForThisLocation = predictTheSkyUrl.replace("latitude", latitude).replace("longitude", longitude);
-    $.ajax({
-        url: predictTheSkyUrl,
-        dataType: "json",
-        type: 'GET',
-    }).then(function(response) {
-        console.log(response);
-      }); */
-
-// this shit dont work
-// var queryURL = "http://star-api.herokuapp.com/api/v1/search?q='Sun'";
+// var with date to pass into api parameters
+$('#submitButton').on('click', function() {
+  var date = $('#date').val().toString();
+  var date2 = moment(date).format('MM/DD/YYYY'); 
+  console.log(date);
+  console.log(date2);
+  nearEarth(date);
+  moonPhase(date2);
 
 // this totally works w00t
 var queryURL = "http://api.open-notify.org/iss-now.json";
@@ -43,7 +26,8 @@ $.ajax({
 });
 
 // moonphase api call --- populate into table?
-var moonPhaseURL = "https://api.usno.navy.mil/moon/phase?date=3/19/2019&nump";
+function moonPhase() {
+var moonPhaseURL = "https://api.usno.navy.mil/moon/phase?date=" + date2 + "&nump=4";
 
 $.ajax({
   url: moonPhaseURL,
@@ -51,23 +35,19 @@ $.ajax({
 }).then(function(response) {
   console.log(response);
 });
+}
 
-// this shit is dead af
-/* var starURL = "https://cors-ut-bootcamp.herokuapp.com/http://star-api.herokuapp.com/api/v1/search?q='Sun'";
-
-$.ajax({
-  url: starURL,
-  method: "GET"
-}).then(function(response) {
-  console.log(response);
-}); */
-
-// nasa api key: w6WzGfIJHpH3CYm2kyvIAuej0NwIjBmbh1ywubzT
-var neoWSURL = "https://api.nasa.gov/neo/rest/v1/feed?start_date=2019-03-19&api_key=w6WzGfIJHpH3CYm2kyvIAuej0NwIjBmbh1ywubzT";
+// Near Earth Objects NASA api key: w6WzGfIJHpH3CYm2kyvIAuej0NwIjBmbh1ywubzT
+function nearEarth() {
+var neoWSURL = "https://api.nasa.gov/neo/rest/v1/feed?start_date=" + date + "&api_key=w6WzGfIJHpH3CYm2kyvIAuej0NwIjBmbh1ywubzT";
 
 $.ajax({
   url: neoWSURL,
   method: "GET"
 }).then(function(response) {
   console.log(response);
-});   
+});
+}
+
+// on click closing tag. dont fuck with this
+})
