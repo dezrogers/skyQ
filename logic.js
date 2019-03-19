@@ -1,20 +1,17 @@
-
-// api call - predict the sky
-
 // api call - geolocation
 
 // on submit -- convery city to lat/lon and pull relevant data from predict the sky
 
-// rss with up to date nasa news?
-
 // var with date to pass into api parameters
-$('#submitButton').on('click', function() {
+$('#submitButton').on('click', function(e) {
   var date = $('#date').val().toString();
   var date2 = moment(date).format('MM/DD/YYYY'); 
   console.log(date);
   console.log(date2);
   nearEarth(date);
   moonPhase(date2);
+  e.preventDefault();
+  window.location.href = "main.html";
 
 // this totally works w00t
 var queryURL = "http://api.open-notify.org/iss-now.json";
@@ -53,11 +50,7 @@ $.ajax({
 // on click closing tag. dont fuck with this
 })
 
-$("#submitButton").on("click", function(e) {
-    e.preventDefault();
-    window.location.href = "main.html";
-    
-});
+
 $("#returnButton").on("click", function(e) {
     e.preventDefault();
     window.location.href = "index.html";
