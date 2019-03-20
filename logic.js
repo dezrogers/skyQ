@@ -1,9 +1,5 @@
 $(document).ready(function(){
 
-  // api call - geolocation
-
-  // rss with up to date nasa news?
-
   // VARIABLES
   // ---------------------------------
   var lat, lon, acc, postcode;
@@ -111,11 +107,10 @@ $(document).ready(function(){
         method: "GET"
       }).then(function(response) {
         console.log(response);
-        $("#nearEarth").empty();
+        $("#nearEarthObjects").empty();
         var nearEarthObjects = $("<p>");
         nearEarthObjects.text(response.element_count + " current objects near the Earth")
-        $("#nearEarth").append(nearEarthObjects);
-
+        $("#nearEarthObjects").append(nearEarthObjects);
       });
     }
 
