@@ -56,7 +56,7 @@ $(document).ready(function(){
     })
   }
 
-  setTimeout(display, 2000);
+  setTimeout(display, 5000);
 
 
   // EVENTS
@@ -67,6 +67,9 @@ $(document).ready(function(){
   // var with date to pass into api parameters
   $('#submitButton').on('click', function(e) {
     e.preventDefault();
+
+    $("#weatherDiv").empty();
+    $("#eventsDiv").empty();
 
     var date = $('#date').val().toString();
     var date2 = moment(date).format('MM/DD/YYYY');
@@ -80,7 +83,13 @@ $(document).ready(function(){
       url: queryISSURL,
       method: "GET"
     }).then(function(response) {
-      console.log(response);
+      console.log(response); 
+      // print iss coordinates to neo div
+      var issLatitude = JSON.stringify(response.iss_position.latitude);
+      var issLongitude = JSON.stringify(response.iss_position.longitude);
+      console.log('Latittude: ' + issLatitude, 'Longitude: ' + issLongitude);
+      // var issLatLon = JSON.stringify(issLatitude, issLongitude);
+      $("#nearEarth").append('Latittude: ' + issLatitude, 'Longitude: ' + issLongitude);
     });
 
     // moonphase api call --- populate into table?
@@ -91,12 +100,22 @@ $(document).ready(function(){
         url: moonPhaseURL,
         method: "GET"
       }).then(function(response) {
-        console.log(response);
+        $('#moonPhases').empty();
+        console.log(response); 
+        // populate into #eventsDiv. phasedata [4]
+        var phase1 = $('<p>').text('Full Moon: ' + response.phasedata[0].date);
+        var phase2 = $('<p>').text('Last Quarter: ' + response.phasedata[1].date);
+        var phase3 = $('<p>').text('New Moon: ' + response.phasedata[2].date);
+        var phase4 = $('<p>').text('First Quarter: ' + response.phasedata[3].date);
+        /* console.log(phase1);
+        console.log(phase2);
+        console.log(phase3);
+        console.log(phase4); */
+        $("#moonPhases").append(phase1, phase2, phase3, phase4);
       });
     }
 
     moonPhase(date2);
-
 
     // Near Earth Objects NASA api key: w6WzGfIJHpH3CYm2kyvIAuej0NwIjBmbh1ywubzT
     function nearEarth() {
@@ -107,19 +126,20 @@ $(document).ready(function(){
         method: "GET"
       }).then(function(response) {
         console.log(response);
+
+        $("#nearEarth").empty();
+        var nearEarthObjects = $("<p>");
+        nearEarthObjects.text(response.element_count + " current objects near the Earth")
+        $("#nearEarth").append(nearEarthObjects);
       });
     }
 
     nearEarth(date);
 
     // if user denies location queryURL is user input value
-    if ((lat || lon) !== undefined) {
-      weatherQueryURL = "https://api.openweathermap.org/data/2.5/weather?lat="+lat+"&lon="+lon+"&units=imperial&appid="+weatherAPIKey;
-    } else {
-      var userLocation = $("#zipCode").val().toString();
-      console.log(userLocation);
-      weatherQueryURL = "https://api.openweathermap.org/data/2.5/weather?zip="+userLocation+"&units=imperial&appid="+weatherAPIKey;
-    }
+    var userLocation = $("#zipCode").val().toString();
+    console.log(userLocation);
+    weatherQueryURL = "https://api.openweathermap.org/data/2.5/weather?zip="+userLocation+"&units=imperial&appid="+weatherAPIKey;
 
 
     // Weather API - current temp
@@ -127,7 +147,7 @@ $(document).ready(function(){
       url: weatherQueryURL,
       method: "GET"
     }).then(function(response) {
-
+      $('#weatherDiv').empty();
       // Log the queryURL
       console.log(weatherQueryURL);
 
@@ -139,28 +159,22 @@ $(document).ready(function(){
       var pWindSpeed = $("<p>").text("Wind Speed: "+ response.wind.speed + " mph");
       var pWindDeg = $("<p>").text("Wind Deg: "+ response.wind.deg + "°");
       var pHumid = $("<p>").text("Humidity: "+ response.main.humidity);
-      var pTemp = $("<p>").text("Temp: "+ "low "+response.main.temp_min +"° / "+ "high "+response.main.temp_max+"°");
+      var pTemp = $("<p>").text("Temp: "+ "low "+ Math.floor(response.main.temp_min) +"° / "+ "high "+ Math.floor(response.main.temp_max) +"°");
       var pClouds = $("<p>").text("Cloudiness: "+ response.clouds.all +"%");
       var iconCode = response.weather[0].icon;
       var iconUrl = "http://openweathermap.org/img/w/" + iconCode + ".png";
       var wIcon = $("<img>").attr("id", wIcon).attr("alt", "Weather Icon").attr("src", iconUrl);
 
-      /*
-      // Calculate the temperature (converted from Kelvin)
-      // To convert from Kelvin to Fahrenheit: F = (K - 273.15) * 1.80 + 32
-      var Fahrenheit = Math.floor(((response.main.temp - 273.15)*1.80 +32));
-      console.log(Fahrenheit + "°F")
-      
-      // Dump the temperature content into HTML
-      var pTemp = $("<p>").text("Temp: "+ Fahrenheit);
-      */      
 
       // transfer content to HTML
-      var weatherCol = $("<div>").addClass("col-lg-12");
-      $("#weatherDiv").append(weatherCol);
-      weatherCol.append(pCity, wIcon, pWeather, pTemp, pClouds, pHumid, pWindSpeed, pWindDeg);
+      var weatherCol1 = $("<div>").addClass("col-lg-6");
+      var weatherCol2 = $("<div>").addClass("col-lg-6");
 
-     
+      $("#weatherDiv").append(weatherCol1, weatherCol2);
+
+      weatherCol1.append(pCity, wIcon, pWeather, pTemp);
+      weatherCol2.append(pClouds, pHumid, pWindSpeed, pWindDeg);
+
     }) // on click closing tag. dont fuck with this
   })
 
