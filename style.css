@@ -23,20 +23,10 @@ h2 {
     margin-bottom: 20px;
 }
 
-<<<<<<< HEAD
-form {
-    height: 300px;
-    width: 400px;
-    margin: auto;
-    background-color: rgba(0, 0, 0, 0.726);
-    padding: 20px;
-    color: white;
-    border-radius: 5px;
-=======
 #weatherDiv {
     background-color: white;
     height: 275px;
->>>>>>> 5a8a0238a2b4b7e34c8335d26eef0bcb17634c90
+    line-height: 1;
 }
 
 #contentRow {

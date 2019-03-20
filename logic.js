@@ -60,7 +60,7 @@ $(document).ready(function(){
     })
   }
 
-  setTimeout(display, 10000);
+  setTimeout(display, 2000);
 
 
   // EVENTS
@@ -111,6 +111,11 @@ $(document).ready(function(){
         method: "GET"
       }).then(function(response) {
         console.log(response);
+        $("#nearEarth").empty();
+        var nearEarthObjects = $("<p>");
+        nearEarthObjects.text(response.element_count + " current objects near the Earth")
+        $("#nearEarth").append(nearEarthObjects);
+
       });
     }
 
@@ -137,12 +142,13 @@ $(document).ready(function(){
 
       // log the resulting object
       console.log(response);
+      $("#weatherDiv").empty();
 
       var pWeather = $("<p>").text("Forecast: "+ response.weather[0].main);
       var pCity = $("<p>").text("City: "+ response.name+", "+response.sys.country);
       var pWindSpeed = $("<p>").text("Wind Speed: "+ response.wind.speed + " mph");
       var pWindDeg = $("<p>").text("Wind Deg: "+ response.wind.deg + "°");
-      var pHumid = $("<p>").text("Humidity: "+ response.main.humidity);
+      var pHumid = $("<p>").text("Humidity: "+ response.main.humidity + "%");
       var pTemp = $("<p>").text("Temp: "+ "low "+response.main.temp_min +"° / "+ "high "+response.main.temp_max+"°");
       var pClouds = $("<p>").text("Cloudiness: "+ response.clouds.all +"%");
       var iconCode = response.weather[0].icon;
