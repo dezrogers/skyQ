@@ -1,0 +1,5 @@
+bugs 
+    ISS COORDINATES DISPLAY:
+    lat/lon for iss formatting
+    have to press submit button twice to display coordinates
+    sometimes coordinates blink in and out?
