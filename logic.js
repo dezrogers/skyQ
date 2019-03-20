@@ -69,7 +69,7 @@ $(document).ready(function(){
     e.preventDefault();
 
     $("#weatherDiv").empty();
-    $("#eventsDiv").empty();
+    // $("#eventsDiv").empty();
 
     var date = $('#date').val().toString();
     var date2 = moment(date).format('MM/DD/YYYY');
@@ -126,7 +126,6 @@ $(document).ready(function(){
         method: "GET"
       }).then(function(response) {
         console.log(response);
-
         $("#nearEarth").empty();
         var nearEarthObjects = $("<p>");
         nearEarthObjects.text(response.element_count + " current objects near the Earth")
