@@ -69,7 +69,7 @@ $(document).ready(function(){
     e.preventDefault();
 
     $("#weatherDiv").empty();
-    $("#eventsDiv").empty();
+    // $("#eventsDiv").empty();
 
     var date = $('#date').val().toString();
     var date2 = moment(date).format('MM/DD/YYYY');
