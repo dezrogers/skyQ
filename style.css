@@ -17,10 +17,13 @@ h2 {
     color: white;
 }
 
-#formcontainer {
-    margin-top: 125px;
+#eventsDiv {
+    background-color: white;
+    height: 275px;
+    margin-bottom: 20px;
 }
 
+<<<<<<< HEAD
 form {
     height: 300px;
     width: 400px;
@@ -29,32 +32,18 @@ form {
     padding: 20px;
     color: white;
     border-radius: 5px;
+=======
+#weatherDiv {
+    background-color: white;
+    height: 275px;
+>>>>>>> 5a8a0238a2b4b7e34c8335d26eef0bcb17634c90
 }
 
-#eventContainer {
-    float: left;
-    background-color:white;
-    height:275px;
-    width:775px;
-    padding:20px;
-    margin-top:20px;
-    margin-bottom:10px;
-}
-#weatherContainer {
-    float: left;
-    background-color:white;
-    height:275px;
-    width:775px;
-    padding:20px;
-    margin-top:10px;
-    margin-bottom:20px;
-}
-#rssContainer {
-    float: right;
-    background-color:white;
-    height:570px;
-    width:290px;
+#contentRow {
     margin-top: 20px;
-    justify-content: center;
 }
 
+input {
+    font-size: 16px;
+    width: 80px;
+}
