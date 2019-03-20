@@ -34,3 +34,10 @@ h2 {
 #contentRow {
     margin-top: 20px;
 }
+
+#clicker{
+    background-color: rgba(57, 11, 223, 0);
+    color:rgb(250, 250, 250);
+    font-size:28px;
+    padding:5px;
+}

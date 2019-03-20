@@ -177,4 +177,44 @@ $(document).ready(function(){
 
     }) // on click closing tag. dont fuck with this
   })
+
+//Star Clicker Config
+    var config = {
+      apiKey: "AIzaSyCXNm13AyUH8iwFFpEAhKFMM-5IaPswpAE",
+      authDomain: "fir-click-counter-7cdb9.firebaseapp.com",
+      databaseURL: "https://star-clicker.firebaseio.com/",
+      storageBucket: "fir-click-counter-7cdb9.appspot.com"
+    };
+
+    firebase.initializeApp(config);
+
+    // VARIABLES
+    
+    var database = firebase.database();
+    var clickCounter = 0;
+
+    // On Click of Button
+    $('#submitButton').on("click", function() {
+
+      // Add to clickCounter
+      clickCounter++;
+
+      //  Store Click Data to Firebase in a JSON property called clickCount
+      database.ref().set({
+        clickCount: clickCounter
+      });
+    });
+
+    database.ref().on("value", function(snapshot) {
+
+      console.log(snapshot.val());
+
+      clickCounter = snapshot.val().clickCount;
+
+      $("#click-value").text(snapshot.val().clickCount);
+
+    }, function(errorObject) {
+
+      console.log("The read failed: " + errorObject.code);
+    });
 })
