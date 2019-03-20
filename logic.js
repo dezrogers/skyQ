@@ -80,7 +80,13 @@ $(document).ready(function(){
       url: queryISSURL,
       method: "GET"
     }).then(function(response) {
-      console.log(response);
+      console.log(response); 
+      // print iss coordinates to neo div
+      var issLatitude = JSON.stringify(response.iss_position.latitude);
+      var issLongitude = JSON.stringify(response.iss_position.longitude);
+      console.log('Latittude: ' + issLatitude, 'Longitude: ' + issLongitude);
+      // var issLatLon = JSON.stringify(issLatitude, issLongitude);
+      $("#nearEarth").append('Latittude: ' + issLatitude, 'Longitude: ' + issLongitude);
     });
 
     // moonphase api call --- populate into table?
@@ -91,7 +97,18 @@ $(document).ready(function(){
         url: moonPhaseURL,
         method: "GET"
       }).then(function(response) {
-        console.log(response);
+        $('#moonPhases').empty();
+        console.log(response); 
+        // populate into #eventsDiv. phasedata [4]
+        var phase1 = $('<p>').text('Full Moon: ' + response.phasedata[0].date);
+        var phase2 = $('<p>').text('Last Quarter: ' + response.phasedata[1].date);
+        var phase3 = $('<p>').text('New Moon: ' + response.phasedata[2].date);
+        var phase4 = $('<p>').text('First Quarter: ' + response.phasedata[3].date);
+        /* console.log(phase1);
+        console.log(phase2);
+        console.log(phase3);
+        console.log(phase4); */
+        $("#moonPhases").append(phase1, phase2, phase3, phase4);
       });
     }
 
@@ -107,10 +124,11 @@ $(document).ready(function(){
         method: "GET"
       }).then(function(response) {
         console.log(response);
-        $("#nearEarthObjects").empty();
+
+        $("#nearEarth").empty();
         var nearEarthObjects = $("<p>");
         nearEarthObjects.text(response.element_count + " current objects near the Earth")
-        $("#nearEarthObjects").append(nearEarthObjects);
+        $("#nearEarth").append(nearEarthObjects);
       });
     }
 
@@ -131,7 +149,7 @@ $(document).ready(function(){
       url: weatherQueryURL,
       method: "GET"
     }).then(function(response) {
-
+      $('#weatherDiv').empty();
       // Log the queryURL
       console.log(weatherQueryURL);
 
