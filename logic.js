@@ -107,6 +107,10 @@ $(document).ready(function(){
         method: "GET"
       }).then(function(response) {
         console.log(response);
+        $("#nearEarthObjects").empty();
+        var nearEarthObjects = $("<p>");
+        nearEarthObjects.text(response.element_count + " current objects near the Earth")
+        $("#nearEarthObjects").append(nearEarthObjects);
       });
     }
 
