@@ -14,6 +14,15 @@ $(document).ready(function(){
   var weatherQueryURL;
   var mapsAPIKey = "KKNAYOZYN0J0eoPbxt3VZ7exkb6E6CCv";
   var mapsQueryURL;
+  
+  //Star Clicker Config
+  var config = {
+    apiKey: "AIzaSyCXNm13AyUH8iwFFpEAhKFMM-5IaPswpAE",
+    authDomain: "fir-click-counter-7cdb9.firebaseapp.com",
+    databaseURL: "https://star-clicker.firebaseio.com/",
+    storageBucket: "fir-click-counter-7cdb9.appspot.com"
+  };
+  
 
 
   // FUNCTIONS
@@ -64,12 +73,25 @@ $(document).ready(function(){
   var today = moment().format("YYYY-MM-DD");
   $("#date").attr("value", today);
 
+  firebase.initializeApp(config);
+
+  var database = firebase.database();
+  var clickCounter = 0;
+
   // var with date to pass into api parameters
   $('#submitButton').on('click', function(e) {
     e.preventDefault();
 
     $("#weatherDiv").empty();
     // $("#eventsDiv").empty();
+
+    // Add to clickCounter
+    clickCounter++;
+
+    //  Store Click Data to Firebase in a JSON property called clickCount
+    database.ref().set({
+      clickCount: clickCounter
+    });
 
     var date = $('#date').val().toString();
     var date2 = moment(date).format('MM/DD/YYYY');
@@ -176,46 +198,21 @@ $(document).ready(function(){
       weatherCol1.append(pCity, wIcon, pWeather, pTemp);
       weatherCol2.append(pClouds, pHumid, pWindSpeed, pWindDeg);
 
-    }) // on click closing tag. dont fuck with this
+    })
+
   })
 
-//Star Clicker Config
-    var config = {
-      apiKey: "AIzaSyCXNm13AyUH8iwFFpEAhKFMM-5IaPswpAE",
-      authDomain: "fir-click-counter-7cdb9.firebaseapp.com",
-      databaseURL: "https://star-clicker.firebaseio.com/",
-      storageBucket: "fir-click-counter-7cdb9.appspot.com"
-    };
+  database.ref().on("value", function(snapshot) {
 
-    firebase.initializeApp(config);
+    console.log(snapshot.val());
 
-    // VARIABLES
-    
-    var database = firebase.database();
-    var clickCounter = 0;
+    clickCounter = snapshot.val().clickCount;
 
-    // On Click of Button
-    $('#submitButton').on("click", function() {
-
-      // Add to clickCounter
-      clickCounter++;
-
-      //  Store Click Data to Firebase in a JSON property called clickCount
-      database.ref().set({
-        clickCount: clickCounter
-      });
-    });
-
-    database.ref().on("value", function(snapshot) {
-
-      console.log(snapshot.val());
-
-      clickCounter = snapshot.val().clickCount;
-
-      $("#click-value").text(snapshot.val().clickCount);
+    $("#click-value").text(snapshot.val().clickCount);
 
     }, function(errorObject) {
 
-      console.log("The read failed: " + errorObject.code);
-    });
+    console.log("The read failed: " + errorObject.code);
+  });
+
 })
