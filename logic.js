@@ -1,9 +1,5 @@
 $(document).ready(function(){
 
-  // api call - geolocation
-
-  // rss with up to date nasa news?
-
   // VARIABLES
   // ---------------------------------
   var lat, lon, acc, postcode;
