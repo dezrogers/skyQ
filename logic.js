@@ -115,20 +115,10 @@ $(document).ready(function(){
     nearEarth(date);
 
     // if user denies location queryURL is user input value
-    // blocks > zip, allows wants to input zip
     var userLocation = $("#zipCode").val().toString();
     console.log(userLocation);
     weatherQueryURL = "https://api.openweathermap.org/data/2.5/weather?zip="+userLocation+"&units=imperial&appid="+weatherAPIKey;
 
-    /*
-    if ((lat || lon) === undefined) {
-      var userLocation = $("#zipCode").val().toString();
-      console.log(userLocation);
-      weatherQueryURL = "https://api.openweathermap.org/data/2.5/weather?zip="+userLocation+"&units=imperial&appid="+weatherAPIKey;
-    } else {
-      weatherQueryURL = "https://api.openweathermap.org/data/2.5/weather?lat="+lat+"&lon="+lon+"&units=imperial&appid="+weatherAPIKey;
-    }
-    */
 
     // Weather API - current temp
     $.ajax ({
@@ -155,11 +145,14 @@ $(document).ready(function(){
 
 
       // transfer content to HTML
-      var weatherCol = $("<div>").addClass("col-lg-12");
-      $("#weatherDiv").append(weatherCol);
-      weatherCol.append(pCity, wIcon, pWeather, pTemp, pClouds, pHumid, pWindSpeed, pWindDeg);
+      var weatherCol1 = $("<div>").addClass("col-lg-6");
+      var weatherCol2 = $("<div>").addClass("col-lg-6");
 
-     
+      $("#weatherDiv").append(weatherCol1, weatherCol2);
+
+      weatherCol1.append(pCity, wIcon, pWeather, pTemp);
+      weatherCol2.append(pClouds, pHumid, pWindSpeed, pWindDeg);
+
     }) // on click closing tag. dont fuck with this
   })
 })
