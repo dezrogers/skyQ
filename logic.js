@@ -56,7 +56,7 @@ $(document).ready(function(){
     })
   }
 
-  setTimeout(display, 10000);
+  setTimeout(display, 5000);
 
 
   // EVENTS
@@ -67,6 +67,9 @@ $(document).ready(function(){
   // var with date to pass into api parameters
   $('#submitButton').on('click', function(e) {
     e.preventDefault();
+
+    $("#weatherDiv").empty();
+    $("#eventsDiv").empty();
 
     var date = $('#date').val().toString();
     var date2 = moment(date).format('MM/DD/YYYY');
@@ -114,7 +117,6 @@ $(document).ready(function(){
 
     moonPhase(date2);
 
-
     // Near Earth Objects NASA api key: w6WzGfIJHpH3CYm2kyvIAuej0NwIjBmbh1ywubzT
     function nearEarth() {
       var neoWSURL = "https://api.nasa.gov/neo/rest/v1/feed?start_date=" + date + "&api_key=w6WzGfIJHpH3CYm2kyvIAuej0NwIjBmbh1ywubzT";
@@ -135,13 +137,9 @@ $(document).ready(function(){
     nearEarth(date);
 
     // if user denies location queryURL is user input value
-    if ((lat || lon) !== undefined) {
-      weatherQueryURL = "https://api.openweathermap.org/data/2.5/weather?lat="+lat+"&lon="+lon+"&units=imperial&appid="+weatherAPIKey;
-    } else {
-      var userLocation = $("#zipCode").val().toString();
-      console.log(userLocation);
-      weatherQueryURL = "https://api.openweathermap.org/data/2.5/weather?zip="+userLocation+"&units=imperial&appid="+weatherAPIKey;
-    }
+    var userLocation = $("#zipCode").val().toString();
+    console.log(userLocation);
+    weatherQueryURL = "https://api.openweathermap.org/data/2.5/weather?zip="+userLocation+"&units=imperial&appid="+weatherAPIKey;
 
 
     // Weather API - current temp
@@ -161,28 +159,22 @@ $(document).ready(function(){
       var pWindSpeed = $("<p>").text("Wind Speed: "+ response.wind.speed + " mph");
       var pWindDeg = $("<p>").text("Wind Deg: "+ response.wind.deg + "°");
       var pHumid = $("<p>").text("Humidity: "+ response.main.humidity);
-      var pTemp = $("<p>").text("Temp: "+ "low "+response.main.temp_min +"° / "+ "high "+response.main.temp_max+"°");
+      var pTemp = $("<p>").text("Temp: "+ "low "+ Math.floor(response.main.temp_min) +"° / "+ "high "+ Math.floor(response.main.temp_max) +"°");
       var pClouds = $("<p>").text("Cloudiness: "+ response.clouds.all +"%");
       var iconCode = response.weather[0].icon;
       var iconUrl = "http://openweathermap.org/img/w/" + iconCode + ".png";
       var wIcon = $("<img>").attr("id", wIcon).attr("alt", "Weather Icon").attr("src", iconUrl);
 
-      /*
-      // Calculate the temperature (converted from Kelvin)
-      // To convert from Kelvin to Fahrenheit: F = (K - 273.15) * 1.80 + 32
-      var Fahrenheit = Math.floor(((response.main.temp - 273.15)*1.80 +32));
-      console.log(Fahrenheit + "°F")
-      
-      // Dump the temperature content into HTML
-      var pTemp = $("<p>").text("Temp: "+ Fahrenheit);
-      */      
 
       // transfer content to HTML
-      var weatherCol = $("<div>").addClass("col-lg-12");
-      $("#weatherDiv").append(weatherCol);
-      weatherCol.append(pCity, wIcon, pWeather, pTemp, pClouds, pHumid, pWindSpeed, pWindDeg);
+      var weatherCol1 = $("<div>").addClass("col-lg-6");
+      var weatherCol2 = $("<div>").addClass("col-lg-6");
 
-     
+      $("#weatherDiv").append(weatherCol1, weatherCol2);
+
+      weatherCol1.append(pCity, wIcon, pWeather, pTemp);
+      weatherCol2.append(pClouds, pHumid, pWindSpeed, pWindDeg);
+
     }) // on click closing tag. dont fuck with this
   })
 })
