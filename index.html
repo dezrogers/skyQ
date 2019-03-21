@@ -14,7 +14,7 @@
 </head>
 <body>
     <header>
-        <h1>Project Title</h1>
+        <h1>skyQ</h1>
     </header>
     <div class="container">
         <!-- Bar below the project title -->
@@ -32,12 +32,20 @@
                 <button type="button" id="submitButton" class="btn btn-primary">Submit</button>
             </div>
         </div>
+
         <div class="row hidden" id="contentRow">
-            <div class="col-md-9">
+            <div class="col-lg-9">
                 <!-- Div for moon phases, asteroids, and whatever else -->
                 <div class="row" id="eventsDiv">
                     <!-- .col lg 6 for neo -->
-                    <div class="col-md-6" id="nearEarth">
+                    <div class="col-lg-6">
+                        <div class="row" id="nearEarth">
+
+                        </div>
+
+                        <div class="row" id="iss">
+
+                        </div>
 
                     </div>
                     <!-- .col lg 6 for moonphases -->
@@ -46,6 +54,7 @@
                     </div>
 
                 </div>
+                
                 <!-- Div for weather information -->
                 <div class="row p-4" id="weatherDiv">
                     <div class="col-md-12">
@@ -76,6 +85,7 @@
                     </div>
                 </div>
             </div>
+
             <!-- RSS Feed -->
             <div class="col-md-3 hidden" id="rssDiv">
                 <script type="text/javascript" src="http://output20.rssinclude.com/output?type=js&amp;id=1211729&amp;hash=9747e7882e379c4e0afe9469fd3b7f9c"></script>
@@ -84,5 +94,6 @@
     </div>    
         
     <script type="text/javascript" src ="logic.js"></script>
+
 </body>
 </html>
