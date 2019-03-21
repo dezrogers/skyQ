@@ -23,7 +23,7 @@
                 We've shot for the stars <span id="click-value">#</span> times!
             </div>
             <div class="col-md-3">
-                <input type="number" class="form-control" id="zipCode" placeholder="Zip Code">
+                <input type="number" class="form-control" id="zipCode" placeholder="Determining Location...">
             </div>
             <div class="col-md-3">
                 <input type="date" class="form-control" id="date" placeholder="XX/XX/XXXX">
@@ -32,26 +32,52 @@
                 <button type="button" id="submitButton" class="btn btn-primary">Submit</button>
             </div>
         </div>
-        <div class="row" id="contentRow">
-            <div class="col-lg-9">
+        <div class="row hidden" id="contentRow">
+            <div class="col-md-9">
                 <!-- Div for moon phases, asteroids, and whatever else -->
                 <div class="row" id="eventsDiv">
                     <!-- .col lg 6 for neo -->
-                    <div class="col-lg-6" id="nearEarth">
+                    <div class="col-md-6" id="nearEarth">
 
                     </div>
                     <!-- .col lg 6 for moonphases -->
-                    <div class="col-lg-6" id="moonPhases">
+                    <div class="col-md-6" id="moonPhases">
                         
                     </div>
 
                 </div>
                 <!-- Div for weather information -->
-                <div class="row" id="weatherDiv">
+                <div class="row p-4" id="weatherDiv">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-12" id="city-name"></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 text-center mt-3" id="weather-forecast"></div>
+                        </div>
+                        <div class="row">
+                            <!-- <div class="col-md-12" id="weather-forecast"></div> -->
+                            <div class="col-md-12 text-center mt-3" id="weather-table">
+                                <table class="table text-light table-responsive-md">
+                                    <thead>
+                                        <tr class="">
+                                            <th scope="col">Clouds</th>
+                                            <th scope="col">Humidity</th>
+                                            <th scope="col">Wind Speed</th>
+                                            <th scope="col">Wind Deg</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr></tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <!-- RSS Feed -->
-            <div class="col-lg-3" id="rssDiv">
+            <div class="col-md-3 hidden" id="rssDiv">
                 <script type="text/javascript" src="http://output20.rssinclude.com/output?type=js&amp;id=1211729&amp;hash=9747e7882e379c4e0afe9469fd3b7f9c"></script>
             </div>
         </div>
