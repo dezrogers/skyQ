@@ -176,7 +176,6 @@ console.log(54);
     console.log(userLocation);
     weatherQueryURL = "https://api.openweathermap.org/data/2.5/weather?zip="+userLocation+"&units=imperial&appid="+weatherAPIKey;
     
-    // $("#weatherDiv").empty();
     
     // Weather API - current temp
     $.ajax ({
@@ -190,26 +189,27 @@ console.log(54);
 
       // log the resulting object
       console.log(response);
+
+      //Create weather HTML
       var pCity = $("<h1>").text(response.name+", "+response.sys.country);
       var pWeather = $("<h4>").text(response.weather[0].main);
-      var pTemp = $("<p>").text("low "+ Math.floor(response.main.temp_min) +"° | "+ "high "+ Math.floor(response.main.temp_max) +"°");
+      var pTemp = $("<td>").text(Math.floor(response.main.temp));
       var pClouds = $("<td>").text(response.clouds.all +"%");
       var pHumid = $("<td>").text(response.main.humidity+" %");
       var pWindSpeed = $("<td>").text(Math.floor(response.wind.speed) + " mph");
-      var pWindDeg = $("<td>").text(response.wind.deg +"°");
       
       var iconCode = response.weather[0].icon;
       var iconUrl = "http://openweathermap.org/img/w/" + iconCode + ".png";
       var wIcon = $("<img>").attr("id", "weather-icon").attr("alt", "Weather Icon").attr("src", iconUrl);
       
-      
-      // transfer content to HTML
-      // var weatherCol1 = $("<div>").addClass("col-lg-6");
-      // var weatherCol2 = $("<div>").addClass("col-lg-6");
+      // Empty data divs
+      $("#city-name").empty();
+      $("#weather-forecast").empty();
+      $("tbody>tr").empty();
       
       $("#city-name").append(pCity);
-      $("#weather-forecast").append(wIcon, pWeather, pTemp);
-      $("tbody>tr").append(pClouds, pHumid, pWindSpeed, pWindDeg);
+      $("#weather-forecast").append(wIcon, pWeather);
+      $("tbody>tr").append(pTemp, pClouds, pHumid, pWindSpeed);
   
 
 
