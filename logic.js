@@ -2,6 +2,7 @@ $(document).ready(function(){
 
   // VARIABLES
   // ---------------------------------
+  console.log(5);
   var lat, lon, acc, postcode;
 
   var options = {
@@ -9,6 +10,7 @@ $(document).ready(function(){
       timeout: 50000,
       maximumAge: 10
   };
+  console.log(13);
 
   var weatherAPIKey = "b77ed65941bfb419ca54635b571f1301";
   var weatherQueryURL;
@@ -23,7 +25,7 @@ $(document).ready(function(){
     storageBucket: "fir-click-counter-7cdb9.appspot.com"
   };
   
-
+console.log(28);
 
   // FUNCTIONS
   // ---------------------------------
@@ -40,7 +42,7 @@ $(document).ready(function(){
     lat = crd.latitude;
     lon = crd.longitude;
     acc = crd.accuracy;
-
+    console.log(45);
   }
 
   function error(err) {
@@ -49,7 +51,7 @@ $(document).ready(function(){
 
   // run geolocation code. success, failure, and the last argument failure.
   navigator.geolocation.getCurrentPosition(success, error, options);
-
+console.log(54);
   // display information on front page "default value"
   function display() {
     mapsQueryURL = "https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat="+lat+"&lon="+lon+"";
@@ -62,6 +64,7 @@ $(document).ready(function(){
       postcode = mapsResponse.address.postcode;
       console.log(postcode);
       $("#zipCode").attr("value", postcode);
+      console.log(67);
     })
   }
 
@@ -81,8 +84,8 @@ $(document).ready(function(){
   // var with date to pass into api parameters
   $('#submitButton').on('click', function(e) {
     e.preventDefault();
-
-    $("#weatherDiv").empty();
+    console.log(87);
+    // $("#weatherDiv").empty();
     // $("#eventsDiv").empty();
 
     // Add to clickCounter
@@ -105,13 +108,15 @@ $(document).ready(function(){
       url: queryISSURL,
       method: "GET"
     }).then(function(response) {
+      $("#iss").empty();
       console.log(response); 
       // print iss coordinates to neo div
       var issLatitude = JSON.stringify(response.iss_position.latitude);
       var issLongitude = JSON.stringify(response.iss_position.longitude);
       console.log('Latittude: ' + issLatitude, 'Longitude: ' + issLongitude);
       // var issLatLon = JSON.stringify(issLatitude, issLongitude);
-      $("#nearEarth").append('Latittude: ' + issLatitude, 'Longitude: ' + issLongitude);
+      $("#iss").append('Latittude: ' + issLatitude + ' Longitude: ' + issLongitude);
+      console.log("the code for the iss coordinates ran once");
     });
 
     // moonphase api call --- populate into table?
