@@ -2,19 +2,29 @@ $(document).ready(function(){
 
   // VARIABLES
   // ---------------------------------
-  var lat, lon, acc, postcode;
+  var lat, lon, postCode;
 
   var options = {
       enableHighAccuracy: true,
       timeout: 50000,
       maximumAge: 10
   };
+  console.log(13);
 
   var weatherAPIKey = "b77ed65941bfb419ca54635b571f1301";
   var weatherQueryURL;
   var mapsAPIKey = "KKNAYOZYN0J0eoPbxt3VZ7exkb6E6CCv";
   var mapsQueryURL;
-
+  
+  //Star Clicker Config
+  var config = {
+    apiKey: "AIzaSyCXNm13AyUH8iwFFpEAhKFMM-5IaPswpAE",
+    authDomain: "fir-click-counter-7cdb9.firebaseapp.com",
+    databaseURL: "https://star-clicker.firebaseio.com/",
+    storageBucket: "fir-click-counter-7cdb9.appspot.com"
+  };
+  
+console.log(28);
 
   // FUNCTIONS
   // ---------------------------------
@@ -31,7 +41,7 @@ $(document).ready(function(){
     lat = crd.latitude;
     lon = crd.longitude;
     acc = crd.accuracy;
-
+    console.log(45);
   }
 
   function error(err) {
@@ -40,7 +50,7 @@ $(document).ready(function(){
 
   // run geolocation code. success, failure, and the last argument failure.
   navigator.geolocation.getCurrentPosition(success, error, options);
-
+console.log(54);
   // display information on front page "default value"
   function display() {
     mapsQueryURL = "https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat="+lat+"&lon="+lon+"";
@@ -50,26 +60,50 @@ $(document).ready(function(){
       method: "GET"
     }).then(function(mapsResponse) {
       console.log(mapsResponse);
-      postcode = mapsResponse.address.postcode;
-      console.log(postcode);
-      $("#zipCode").attr("value", postcode);
+      postCode = mapsResponse.address.postcode;
+      console.log(postCode);
+      $("#zipCode").attr("value", postCode);
+
     })
   }
-
-  setTimeout(display, 5000);
-
-
+  
+  setTimeout(display, 10000);
+  
+  
   // EVENTS
   // ---------------------------------------------------------
   var today = moment().format("YYYY-MM-DD");
   $("#date").attr("value", today);
+  
+  $(".hidden").hide();
+  
+  $("#zipCode").attr("placeholder", "Determining Location...");
+
+  // if (postCode === undefined) {
+  //   $("#zipCode").attr("placeholder", "Zip Code");
+  // } else {
+  //   $("#zipCode").attr("placeholder", "Determining Location...");
+  // }
+
+
+  firebase.initializeApp(config);
+
+  var database = firebase.database();
+  var clickCounter = 0;
 
   // var with date to pass into api parameters
   $('#submitButton').on('click', function(e) {
     e.preventDefault();
+    $(".hidden").show();
 
-    $("#weatherDiv").empty();
-    // $("#eventsDiv").empty();
+
+    // Add to clickCounter
+    clickCounter++;
+
+    //  Store Click Data to Firebase in a JSON property called clickCount
+    database.ref().set({
+      clickCount: clickCounter
+    });
 
     var date = $('#date').val().toString();
     var date2 = moment(date).format('MM/DD/YYYY');
@@ -83,13 +117,15 @@ $(document).ready(function(){
       url: queryISSURL,
       method: "GET"
     }).then(function(response) {
+      $("#iss").empty();
       console.log(response); 
       // print iss coordinates to neo div
       var issLatitude = JSON.stringify(response.iss_position.latitude);
       var issLongitude = JSON.stringify(response.iss_position.longitude);
-      console.log('Latittude: ' + issLatitude, 'Longitude: ' + issLongitude);
+      console.log('Latitude: ' + issLatitude, 'Longitude: ' + issLongitude);
       // var issLatLon = JSON.stringify(issLatitude, issLongitude);
-      $("#nearEarth").append('Latittude: ' + issLatitude, 'Longitude: ' + issLongitude);
+      $("#iss").append('Latitude: ' + issLatitude + ' Longitude: ' + issLongitude);
+      console.log("the code for the iss coordinates ran once");
     });
 
     // moonphase api call --- populate into table?
@@ -126,7 +162,6 @@ $(document).ready(function(){
         method: "GET"
       }).then(function(response) {
         console.log(response);
-
         $("#nearEarth").empty();
         var nearEarthObjects = $("<p>");
         nearEarthObjects.text(response.element_count + " current objects near the Earth")
@@ -140,81 +175,59 @@ $(document).ready(function(){
     var userLocation = $("#zipCode").val().toString();
     console.log(userLocation);
     weatherQueryURL = "https://api.openweathermap.org/data/2.5/weather?zip="+userLocation+"&units=imperial&appid="+weatherAPIKey;
-
-
+    
+    // $("#weatherDiv").empty();
+    
     // Weather API - current temp
     $.ajax ({
       url: weatherQueryURL,
       method: "GET"
     }).then(function(response) {
-      $('#weatherDiv').empty();
+
       // Log the queryURL
       console.log(weatherQueryURL);
+      // CODE for emptying weather data on click
 
       // log the resulting object
       console.log(response);
-
-      var pWeather = $("<p>").text("Forecast: "+ response.weather[0].main);
-      var pCity = $("<p>").text("City: "+ response.name+", "+response.sys.country);
-      var pWindSpeed = $("<p>").text("Wind Speed: "+ response.wind.speed + " mph");
-      var pWindDeg = $("<p>").text("Wind Deg: "+ response.wind.deg + "°");
-      var pHumid = $("<p>").text("Humidity: "+ response.main.humidity);
-      var pTemp = $("<p>").text("Temp: "+ "low "+ Math.floor(response.main.temp_min) +"° / "+ "high "+ Math.floor(response.main.temp_max) +"°");
-      var pClouds = $("<p>").text("Cloudiness: "+ response.clouds.all +"%");
+      var pCity = $("<h1>").text(response.name+", "+response.sys.country);
+      var pWeather = $("<h4>").text(response.weather[0].main);
+      var pTemp = $("<p>").text("low "+ Math.floor(response.main.temp_min) +"° | "+ "high "+ Math.floor(response.main.temp_max) +"°");
+      var pClouds = $("<td>").text(response.clouds.all +"%");
+      var pHumid = $("<td>").text(response.main.humidity+" %");
+      var pWindSpeed = $("<td>").text(Math.floor(response.wind.speed) + " mph");
+      var pWindDeg = $("<td>").text(response.wind.deg +"°");
+      
       var iconCode = response.weather[0].icon;
       var iconUrl = "http://openweathermap.org/img/w/" + iconCode + ".png";
-      var wIcon = $("<img>").attr("id", wIcon).attr("alt", "Weather Icon").attr("src", iconUrl);
-
-
+      var wIcon = $("<img>").attr("id", "weather-icon").attr("alt", "Weather Icon").attr("src", iconUrl);
+      
+      
       // transfer content to HTML
-      var weatherCol1 = $("<div>").addClass("col-lg-6");
-      var weatherCol2 = $("<div>").addClass("col-lg-6");
+      // var weatherCol1 = $("<div>").addClass("col-lg-6");
+      // var weatherCol2 = $("<div>").addClass("col-lg-6");
+      
+      $("#city-name").append(pCity);
+      $("#weather-forecast").append(wIcon, pWeather, pTemp);
+      $("tbody>tr").append(pClouds, pHumid, pWindSpeed, pWindDeg);
+  
 
-      $("#weatherDiv").append(weatherCol1, weatherCol2);
 
-      weatherCol1.append(pCity, wIcon, pWeather, pTemp);
-      weatherCol2.append(pClouds, pHumid, pWindSpeed, pWindDeg);
+    })
 
-    }) // on click closing tag. dont fuck with this
   })
 
-//Star Clicker Config
-    var config = {
-      apiKey: "AIzaSyCXNm13AyUH8iwFFpEAhKFMM-5IaPswpAE",
-      authDomain: "fir-click-counter-7cdb9.firebaseapp.com",
-      databaseURL: "https://star-clicker.firebaseio.com/",
-      storageBucket: "fir-click-counter-7cdb9.appspot.com"
-    };
+  database.ref().on("value", function(snapshot) {
 
-    firebase.initializeApp(config);
+    console.log(snapshot.val());
 
-    // VARIABLES
-    
-    var database = firebase.database();
-    var clickCounter = 0;
+    clickCounter = snapshot.val().clickCount;
 
-    // On Click of Button
-    $('#submitButton').on("click", function() {
-
-      // Add to clickCounter
-      clickCounter++;
-
-      //  Store Click Data to Firebase in a JSON property called clickCount
-      database.ref().set({
-        clickCount: clickCounter
-      });
-    });
-
-    database.ref().on("value", function(snapshot) {
-
-      console.log(snapshot.val());
-
-      clickCounter = snapshot.val().clickCount;
-
-      $("#click-value").text(snapshot.val().clickCount);
+    $("#click-value").text(snapshot.val().clickCount);
 
     }, function(errorObject) {
 
-      console.log("The read failed: " + errorObject.code);
-    });
+    console.log("The read failed: " + errorObject.code);
+  });
+
 })

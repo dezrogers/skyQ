@@ -11,6 +11,7 @@ body {
 h1 {
     text-align: center;
     color: white;
+    margin-bottom: 1rem;
 }
 
 h2 {
@@ -19,25 +20,33 @@ h2 {
 
 #eventsDiv {
     background-color: rgba(0, 0, 0, 0.705);
-    height: 275px;
+    min-height: 275px;
     margin-bottom: 20px;
     color: rgb(255, 255, 255);
+    border-radius: 25px;
+    font-size:28px;
+    padding:20px;
+    text-align:center;
 }
 
 #weatherDiv {
     background-color: rgba(0, 0, 0, 0.705);
-    height: 275px;
+    min-height: 275px;
     color: white;
     line-height: 1;
+    border-radius: 25px;
 }
 
 #contentRow {
     margin-top: 20px;
+    margin-bottom: 1.5rem;
 }
 
 #clicker{
-    background-color: rgba(57, 11, 223, 0);
-    color:rgb(250, 250, 250);
-    font-size:28px;
+    background-color: rgba(0, 0, 0, 0.705);
+    color: rgb(255, 255, 255);
+    font-size:24px;
     padding:5px;
+    border-radius: 25px;
+    text-align: center;
 }
