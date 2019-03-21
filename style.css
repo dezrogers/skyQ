@@ -16,17 +16,11 @@ h1 {
 
 h2 {
     color: white;
+    font-size: 18px;
 }
 
-#eventsDiv {
-    background-color: rgba(0, 0, 0, 0.705);
-    min-height: 275px;
+#planetsMoon {
     margin-bottom: 20px;
-    color: rgb(255, 255, 255);
-    border-radius: 25px;
-    font-size:28px;
-    padding:20px;
-    text-align:center;
 }
 
 #weatherDiv {
@@ -35,18 +29,44 @@ h2 {
     color: white;
     line-height: 1;
     border-radius: 25px;
+    margin-bottom: 20px;
 }
 
 #contentRow {
-    margin-top: 20px;
+    margin: 20px 0px;
     margin-bottom: 1.5rem;
 }
 
 #clicker{
     background-color: rgba(0, 0, 0, 0.705);
     color: rgb(255, 255, 255);
-    font-size:24px;
+    font-size: 18px;
     padding:5px;
+    border-radius: 25px;
+    text-align: center;
+    bottom: 0px;
+}
+
+#iss {
+    background-color: rgba(0, 0, 0, 0.705);
+    min-height: 425px;
+    color: white;
+    width: 100%;
+    border-radius: 25px;
+}
+
+#nearEarth {
+    background-color: rgba(0, 0, 0, 0.705);
+    min-height: 275px;
+    color: white;
+    border-radius: 25px;
+    text-align: center;
+}
+
+#moonPhases {
+    background-color: rgba(0, 0, 0, 0.705);
+    min-height: 275px;
+    color: white;
     border-radius: 25px;
     text-align: center;
 }

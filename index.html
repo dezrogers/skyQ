@@ -10,53 +10,56 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.js"></script>
     <script src="https://www.gstatic.com/firebasejs/4.12.0/firebase.js"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <header>
-        <h1>skyQ</h1>
+        <h1 class="animated flash">skyQ</h1>
     </header>
     <div class="container">
         <!-- Bar below the project title -->
         <div class="row" id="topBar">
-            <div class="col-md-5" id="clicker">
-                We've checked out the stars <span id="click-value">#</span> times!
-            </div>
+            <div class="col-md-2"></div>
+
             <div class="col-md-3">
                 <input type="number" class="form-control" id="zipCode" placeholder="">
             </div>
+
+            
+
             <div class="col-md-3">
                 <input type="date" class="form-control" id="date" placeholder="XX/XX/XXXX">
             </div>
+
             <div class="col-md-1">
                 <button type="button" id="submitButton" class="btn btn-primary">Submit</button>
             </div>
+
+            <div class="col-md-3"></div>
+
         </div>
 
-        <div class="row hidden" id="contentRow">
-            <div class="col-lg-9">
-                <!-- Div for moon phases, asteroids, and whatever else -->
-                <div class="row" id="eventsDiv">
-                    <!-- .col lg 6 for neo -->
-                    <div class="col-lg-6">
-                        <div class="row" id="nearEarth">
+        <div class="row" id="contentRow">
+            <div class="col-md-12 hidden" id="iss">
+                Iss Div
+            </div>
+        </div>    
 
-                        </div>
+        <div class="row" id="planetsMoon">
+            <div class="col-md-6 hidden" id="nearEarth">
+                Near earth
+            </div>
 
-                        <div class="row" id="iss">
-
-                        </div>
-
-                    </div>
-                    <!-- .col lg 6 for moonphases -->
-                    <div class="col-md-6" id="moonPhases">
-                        
-                    </div>
-
-                </div>
+            <div class="col-md-6 hidden" id="moonPhases">
+                Moon phases
+            </div>
+        </div>
+                
+                
                 
                 <!-- Div for weather information -->
-                <div class="row p-4" id="weatherDiv">
+                <div class="row p-4 hidden" id="weatherDiv">
                     <div class="col-md-12">
                         <div class="row">
                             <div class="col-md-12" id="city-name"></div>
@@ -83,12 +86,13 @@
                             </div>
                         </div>
                     </div>
+                    
                 </div>
-            </div>
-
-            <!-- RSS Feed -->
-            <div class="col-md-3 hidden" id="rssDiv">
-                <script type="text/javascript" src="http://output20.rssinclude.com/output?type=js&amp;id=1211729&amp;hash=9747e7882e379c4e0afe9469fd3b7f9c"></script>
+                <div class="row">
+                            <div class="col-md-12 hidden" id="clicker">
+                                <h2>We've checked out the stars <span id="click-value">#</span> times!</h2>
+                            </div>
+                        </div>
             </div>
         </div>
     </div>    
