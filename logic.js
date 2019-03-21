@@ -67,7 +67,7 @@ console.log(54);
     })
   }
   
-  setTimeout(display, 5000);
+  setTimeout(display, 10000);
   
   
   // EVENTS
@@ -183,13 +183,13 @@ console.log(54);
       url: weatherQueryURL,
       method: "GET"
     }).then(function(response) {
-      
+
       // Log the queryURL
       console.log(weatherQueryURL);
-      
+      // CODE for emptying weather data on click
+
       // log the resulting object
       console.log(response);
-      
       var pCity = $("<h1>").text(response.name+", "+response.sys.country);
       var pWeather = $("<h4>").text(response.weather[0].main);
       var pTemp = $("<p>").text("low "+ Math.floor(response.main.temp_min) +"° | "+ "high "+ Math.floor(response.main.temp_max) +"°");

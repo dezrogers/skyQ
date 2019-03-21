@@ -20,7 +20,7 @@ h2 {
 
 #eventsDiv {
     background-color: rgba(0, 0, 0, 0.705);
-    height: 275px;
+    min-height: 275px;
     margin-bottom: 20px;
     color: rgb(255, 255, 255);
     border-radius: 25px;
@@ -43,8 +43,8 @@ h2 {
 }
 
 #clicker{
-    background-color: rgba(56, 56, 58, 0.89);
-    color:rgb(250, 250, 250);
+    background-color: rgba(0, 0, 0, 0.705);
+    color: rgb(255, 255, 255);
     font-size:24px;
     padding:5px;
     border-radius: 25px;
