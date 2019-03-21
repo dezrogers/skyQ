@@ -2,8 +2,7 @@ $(document).ready(function(){
 
   // VARIABLES
   // ---------------------------------
-  console.log(5);
-  var lat, lon, acc, postcode;
+  var lat, lon, postCode;
 
   var options = {
       enableHighAccuracy: true,
@@ -61,20 +60,31 @@ console.log(54);
       method: "GET"
     }).then(function(mapsResponse) {
       console.log(mapsResponse);
-      postcode = mapsResponse.address.postcode;
-      console.log(postcode);
-      $("#zipCode").attr("value", postcode);
-      console.log(67);
+      postCode = mapsResponse.address.postcode;
+      console.log(postCode);
+      $("#zipCode").attr("value", postCode);
+
     })
   }
-
-  setTimeout(display, 5000);
-
-
+  
+  setTimeout(display, 10000);
+  
+  
   // EVENTS
   // ---------------------------------------------------------
   var today = moment().format("YYYY-MM-DD");
   $("#date").attr("value", today);
+  
+  $(".hidden").hide();
+  
+  $("#zipCode").attr("placeholder", "Determining Location...");
+
+  // if (postCode === undefined) {
+  //   $("#zipCode").attr("placeholder", "Zip Code");
+  // } else {
+  //   $("#zipCode").attr("placeholder", "Determining Location...");
+  // }
+
 
   firebase.initializeApp(config);
 
@@ -84,9 +94,8 @@ console.log(54);
   // var with date to pass into api parameters
   $('#submitButton').on('click', function(e) {
     e.preventDefault();
-    console.log(87);
-    // $("#weatherDiv").empty();
-    // $("#eventsDiv").empty();
+    $(".hidden").show();
+
 
     // Add to clickCounter
     clickCounter++;
@@ -113,9 +122,9 @@ console.log(54);
       // print iss coordinates to neo div
       var issLatitude = JSON.stringify(response.iss_position.latitude);
       var issLongitude = JSON.stringify(response.iss_position.longitude);
-      console.log('Latittude: ' + issLatitude, 'Longitude: ' + issLongitude);
+      console.log('Latitude: ' + issLatitude, 'Longitude: ' + issLongitude);
       // var issLatLon = JSON.stringify(issLatitude, issLongitude);
-      $("#iss").append('Latittude: ' + issLatitude + ' Longitude: ' + issLongitude);
+      $("#iss").append('Latitude: ' + issLatitude + ' Longitude: ' + issLongitude);
       console.log("the code for the iss coordinates ran once");
     });
 
@@ -166,41 +175,43 @@ console.log(54);
     var userLocation = $("#zipCode").val().toString();
     console.log(userLocation);
     weatherQueryURL = "https://api.openweathermap.org/data/2.5/weather?zip="+userLocation+"&units=imperial&appid="+weatherAPIKey;
-
-
+    
+    // $("#weatherDiv").empty();
+    
     // Weather API - current temp
     $.ajax ({
       url: weatherQueryURL,
       method: "GET"
     }).then(function(response) {
-      $('#weatherDiv').empty();
+
       // Log the queryURL
       console.log(weatherQueryURL);
+      // CODE for emptying weather data on click
 
       // log the resulting object
       console.log(response);
-      $("#weatherDiv").empty();
-
-      var pWeather = $("<p>").text("Forecast: "+ response.weather[0].main);
-      var pCity = $("<p>").text("City: "+ response.name+", "+response.sys.country);
-      var pWindSpeed = $("<p>").text("Wind Speed: "+ response.wind.speed + " mph");
-      var pWindDeg = $("<p>").text("Wind Deg: "+ response.wind.deg + "°");
-      var pHumid = $("<p>").text("Humidity: "+ response.main.humidity);
-      var pTemp = $("<p>").text("Temp: "+ "low "+ Math.floor(response.main.temp_min) +"° / "+ "high "+ Math.floor(response.main.temp_max) +"°");
-      var pClouds = $("<p>").text("Cloudiness: "+ response.clouds.all +"%");
+      var pCity = $("<h1>").text(response.name+", "+response.sys.country);
+      var pWeather = $("<h4>").text(response.weather[0].main);
+      var pTemp = $("<p>").text("low "+ Math.floor(response.main.temp_min) +"° | "+ "high "+ Math.floor(response.main.temp_max) +"°");
+      var pClouds = $("<td>").text(response.clouds.all +"%");
+      var pHumid = $("<td>").text(response.main.humidity+" %");
+      var pWindSpeed = $("<td>").text(Math.floor(response.wind.speed) + " mph");
+      var pWindDeg = $("<td>").text(response.wind.deg +"°");
+      
       var iconCode = response.weather[0].icon;
       var iconUrl = "http://openweathermap.org/img/w/" + iconCode + ".png";
-      var wIcon = $("<img>").attr("id", wIcon).attr("alt", "Weather Icon").attr("src", iconUrl);
-
-
+      var wIcon = $("<img>").attr("id", "weather-icon").attr("alt", "Weather Icon").attr("src", iconUrl);
+      
+      
       // transfer content to HTML
-      var weatherCol1 = $("<div>").addClass("col-lg-6");
-      var weatherCol2 = $("<div>").addClass("col-lg-6");
+      // var weatherCol1 = $("<div>").addClass("col-lg-6");
+      // var weatherCol2 = $("<div>").addClass("col-lg-6");
+      
+      $("#city-name").append(pCity);
+      $("#weather-forecast").append(wIcon, pWeather, pTemp);
+      $("tbody>tr").append(pClouds, pHumid, pWindSpeed, pWindDeg);
+  
 
-      $("#weatherDiv").append(weatherCol1, weatherCol2);
-
-      weatherCol1.append(pCity, wIcon, pWeather, pTemp);
-      weatherCol2.append(pClouds, pHumid, pWindSpeed, pWindDeg);
 
     })
 
