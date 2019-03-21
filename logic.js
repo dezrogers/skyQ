@@ -76,12 +76,13 @@ $(document).ready(function(){
   
   $(".hidden").hide();
   
-  
-  if (postCode === undefined) {
-    $("#zipCode").attr("placeholder", "Zip Code");
-  } else {
-    $("#zipCode").attr("placeholder", "Determining Location...");
-  }
+  $("#zipCode").attr("placeholder", "Determining Location...");
+
+  // if (postCode === undefined) {
+  //   $("#zipCode").attr("placeholder", "Zip Code");
+  // } else {
+  //   $("#zipCode").attr("placeholder", "Determining Location...");
+  // }
 
 
   firebase.initializeApp(config);
@@ -93,6 +94,7 @@ $(document).ready(function(){
   $('#submitButton').on('click', function(e) {
     e.preventDefault();
     $(".hidden").show();
+
 
     // Add to clickCounter
     clickCounter++;
@@ -118,9 +120,9 @@ $(document).ready(function(){
       // print iss coordinates to neo div
       var issLatitude = JSON.stringify(response.iss_position.latitude);
       var issLongitude = JSON.stringify(response.iss_position.longitude);
-      console.log('Latittude: ' + issLatitude, 'Longitude: ' + issLongitude);
+      console.log('Latitude: ' + issLatitude, 'Longitude: ' + issLongitude);
       // var issLatLon = JSON.stringify(issLatitude, issLongitude);
-      $("#nearEarth").append('Latittude: ' + issLatitude, 'Longitude: ' + issLongitude);
+      $("#nearEarth").append('Latitude: ' + issLatitude, 'Longitude: ' + issLongitude);
     });
 
     // moonphase api call --- populate into table?
@@ -171,19 +173,21 @@ $(document).ready(function(){
     var userLocation = $("#zipCode").val().toString();
     console.log(userLocation);
     weatherQueryURL = "https://api.openweathermap.org/data/2.5/weather?zip="+userLocation+"&units=imperial&appid="+weatherAPIKey;
-
-
+    
+    // $("#weatherDiv").empty();
+    
     // Weather API - current temp
     $.ajax ({
       url: weatherQueryURL,
       method: "GET"
     }).then(function(response) {
+      
       // Log the queryURL
       console.log(weatherQueryURL);
-
+      
       // log the resulting object
       console.log(response);
-
+      
       var pCity = $("<h1>").text(response.name+", "+response.sys.country);
       var pWeather = $("<h4>").text(response.weather[0].main);
       var pTemp = $("<p>").text("low "+ Math.floor(response.main.temp_min) +"° | "+ "high "+ Math.floor(response.main.temp_max) +"°");
@@ -195,15 +199,17 @@ $(document).ready(function(){
       var iconCode = response.weather[0].icon;
       var iconUrl = "http://openweathermap.org/img/w/" + iconCode + ".png";
       var wIcon = $("<img>").attr("id", "weather-icon").attr("alt", "Weather Icon").attr("src", iconUrl);
-
-
+      
+      
       // transfer content to HTML
       // var weatherCol1 = $("<div>").addClass("col-lg-6");
       // var weatherCol2 = $("<div>").addClass("col-lg-6");
-
+      
       $("#city-name").append(pCity);
       $("#weather-forecast").append(wIcon, pWeather, pTemp);
       $("tbody>tr").append(pClouds, pHumid, pWindSpeed, pWindDeg);
+  
+
 
     })
 
