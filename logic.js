@@ -2,6 +2,7 @@ $(document).ready(function(){
 
   // VARIABLES
   // ---------------------------------
+  console.log(5);
   var lat, lon, acc, postcode;
 
   var options = {
@@ -9,12 +10,22 @@ $(document).ready(function(){
       timeout: 50000,
       maximumAge: 10
   };
+  console.log(13);
 
   var weatherAPIKey = "b77ed65941bfb419ca54635b571f1301";
   var weatherQueryURL;
   var mapsAPIKey = "KKNAYOZYN0J0eoPbxt3VZ7exkb6E6CCv";
   var mapsQueryURL;
-
+  
+  //Star Clicker Config
+  var config = {
+    apiKey: "AIzaSyCXNm13AyUH8iwFFpEAhKFMM-5IaPswpAE",
+    authDomain: "fir-click-counter-7cdb9.firebaseapp.com",
+    databaseURL: "https://star-clicker.firebaseio.com/",
+    storageBucket: "fir-click-counter-7cdb9.appspot.com"
+  };
+  
+console.log(28);
 
   // FUNCTIONS
   // ---------------------------------
@@ -31,7 +42,7 @@ $(document).ready(function(){
     lat = crd.latitude;
     lon = crd.longitude;
     acc = crd.accuracy;
-
+    console.log(45);
   }
 
   function error(err) {
@@ -40,7 +51,7 @@ $(document).ready(function(){
 
   // run geolocation code. success, failure, and the last argument failure.
   navigator.geolocation.getCurrentPosition(success, error, options);
-
+console.log(54);
   // display information on front page "default value"
   function display() {
     mapsQueryURL = "https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat="+lat+"&lon="+lon+"";
@@ -53,6 +64,7 @@ $(document).ready(function(){
       postcode = mapsResponse.address.postcode;
       console.log(postcode);
       $("#zipCode").attr("value", postcode);
+      console.log(67);
     })
   }
 
@@ -64,12 +76,25 @@ $(document).ready(function(){
   var today = moment().format("YYYY-MM-DD");
   $("#date").attr("value", today);
 
+  firebase.initializeApp(config);
+
+  var database = firebase.database();
+  var clickCounter = 0;
+
   // var with date to pass into api parameters
   $('#submitButton').on('click', function(e) {
     e.preventDefault();
-
-    $("#weatherDiv").empty();
+    console.log(87);
+    // $("#weatherDiv").empty();
     // $("#eventsDiv").empty();
+
+    // Add to clickCounter
+    clickCounter++;
+
+    //  Store Click Data to Firebase in a JSON property called clickCount
+    database.ref().set({
+      clickCount: clickCounter
+    });
 
     var date = $('#date').val().toString();
     var date2 = moment(date).format('MM/DD/YYYY');
@@ -83,13 +108,15 @@ $(document).ready(function(){
       url: queryISSURL,
       method: "GET"
     }).then(function(response) {
+      $("#iss").empty();
       console.log(response); 
       // print iss coordinates to neo div
       var issLatitude = JSON.stringify(response.iss_position.latitude);
       var issLongitude = JSON.stringify(response.iss_position.longitude);
       console.log('Latittude: ' + issLatitude, 'Longitude: ' + issLongitude);
       // var issLatLon = JSON.stringify(issLatitude, issLongitude);
-      $("#nearEarth").append('Latittude: ' + issLatitude, 'Longitude: ' + issLongitude);
+      $("#iss").append('Latittude: ' + issLatitude + ' Longitude: ' + issLongitude);
+      console.log("the code for the iss coordinates ran once");
     });
 
     // moonphase api call --- populate into table?
@@ -126,7 +153,6 @@ $(document).ready(function(){
         method: "GET"
       }).then(function(response) {
         console.log(response);
-
         $("#nearEarth").empty();
         var nearEarthObjects = $("<p>");
         nearEarthObjects.text(response.element_count + " current objects near the Earth")
@@ -153,6 +179,7 @@ $(document).ready(function(){
 
       // log the resulting object
       console.log(response);
+      $("#weatherDiv").empty();
 
       var pWeather = $("<p>").text("Forecast: "+ response.weather[0].main);
       var pCity = $("<p>").text("City: "+ response.name+", "+response.sys.country);
@@ -175,46 +202,21 @@ $(document).ready(function(){
       weatherCol1.append(pCity, wIcon, pWeather, pTemp);
       weatherCol2.append(pClouds, pHumid, pWindSpeed, pWindDeg);
 
-    }) // on click closing tag. dont fuck with this
+    })
+
   })
 
-//Star Clicker Config
-    var config = {
-      apiKey: "AIzaSyCXNm13AyUH8iwFFpEAhKFMM-5IaPswpAE",
-      authDomain: "fir-click-counter-7cdb9.firebaseapp.com",
-      databaseURL: "https://star-clicker.firebaseio.com/",
-      storageBucket: "fir-click-counter-7cdb9.appspot.com"
-    };
+  database.ref().on("value", function(snapshot) {
 
-    firebase.initializeApp(config);
+    console.log(snapshot.val());
 
-    // VARIABLES
-    
-    var database = firebase.database();
-    var clickCounter = 0;
+    clickCounter = snapshot.val().clickCount;
 
-    // On Click of Button
-    $('#submitButton').on("click", function() {
-
-      // Add to clickCounter
-      clickCounter++;
-
-      //  Store Click Data to Firebase in a JSON property called clickCount
-      database.ref().set({
-        clickCount: clickCounter
-      });
-    });
-
-    database.ref().on("value", function(snapshot) {
-
-      console.log(snapshot.val());
-
-      clickCounter = snapshot.val().clickCount;
-
-      $("#click-value").text(snapshot.val().clickCount);
+    $("#click-value").text(snapshot.val().clickCount);
 
     }, function(errorObject) {
 
-      console.log("The read failed: " + errorObject.code);
-    });
+    console.log("The read failed: " + errorObject.code);
+  });
+
 })
