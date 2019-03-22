@@ -1,5 +1,5 @@
 body {
-    background: url(images/background2.jpg);
+    background: url(images/background4.jpeg);
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-position: center;
@@ -16,17 +16,11 @@ h1 {
 
 h2 {
     color: white;
+    font-size: 18px;
 }
 
-#eventsDiv {
-    background-color: rgba(0, 0, 0, 0.705);
-    min-height: 275px;
+#planetsMoon {
     margin-bottom: 20px;
-    color: rgb(255, 255, 255);
-    border-radius: 25px;
-    font-size:28px;
-    padding:20px;
-    text-align:center;
 }
 
 #weatherDiv {
@@ -35,18 +29,95 @@ h2 {
     color: white;
     line-height: 1;
     border-radius: 25px;
+    margin-bottom: 20px;
 }
 
 #contentRow {
-    margin-top: 20px;
+    margin: 20px 0px;
     margin-bottom: 1.5rem;
 }
 
 #clicker{
     background-color: rgba(0, 0, 0, 0.705);
     color: rgb(255, 255, 255);
-    font-size:24px;
+    font-size: 18px;
     padding:5px;
     border-radius: 25px;
     text-align: center;
+    bottom: 0px;
+}
+
+#issDiv {
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.705);
+    height: 450px;
+    color: white;
+    border-radius: 25px;
+}
+
+#nearEarth {
+    background-color: rgba(0, 0, 0, 0.705);
+    min-height: 275px;
+    color: white;
+    border-radius: 25px;
+    text-align: center;
+}
+
+#moonPhases {
+    background-color: rgba(0, 0, 0, 0.705);
+    min-height: 275px;
+    color: white;
+    border-radius: 25px;
+    text-align: center;
+}
+#submitButton {
+    background-color: rgba(0, 0, 0, 0.705);
+    border-color: rgba(255, 255, 255, 0.438);
+    cursor: pointer;
+    border-radius: 10px; 
+}
+  
+#submitButton span {
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+    transition: 0.3s;  
+}
+  
+#submitButton span:after {
+    content: '\00bb';
+    position: absolute;
+    opacity: 0;
+    top: 0;
+    right: -20px;
+    transition: 0.3s;
+}
+  
+#submitButton:hover span {
+    padding-right: 25px;
+}
+#submitButton:hover{
+    background-color: rgba(20, 20, 20, 0.5);
+}
+  
+#submitButton:hover span:after {
+    opacity: 1;
+    right: 0;
+
+}
+#submitButton:active {
+    background-color: rgba(20, 20, 20, 0.5);
+    transition:0.15s;
+  }
+
+#titleText{
+    font-family:'Montserrat', sans-serif;
+    font-weight: 600;
+    padding:10px 10px 0px 10px;
+    font-size:48px;
+}
+#introArea{
+
+    padding-top: 20%;
+
 }
