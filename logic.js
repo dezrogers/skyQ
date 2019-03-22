@@ -68,6 +68,11 @@ console.log(54);
   }
   
   setTimeout(display, 10000);
+
+  //changes "determining location" to "Enter Zipcode" after determining location is called
+  setTimeout(function() {
+    $("#zipCode").attr("placeholder", "Enter Zipcode");
+  }, 11000);
   
   
   // EVENTS
