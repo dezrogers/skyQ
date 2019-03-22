@@ -70,3 +70,49 @@ h2 {
     border-radius: 25px;
     text-align: center;
 }
+#submitButton {
+    background-color: rgba(0, 0, 0, 0.705);
+    border-color: rgba(255, 255, 255, 0.438);
+    cursor: pointer;
+    border-radius: 10px; 
+}
+  
+#submitButton span {
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+    transition: 0.3s;  
+}
+  
+#submitButton span:after {
+    content: '\00bb';
+    position: absolute;
+    opacity: 0;
+    top: 0;
+    right: -20px;
+    transition: 0.3s;
+}
+  
+#submitButton:hover span {
+    padding-right: 25px;
+}
+#submitButton:hover{
+    background-color: rgba(20, 20, 20, 0.5);
+}
+  
+#submitButton:hover span:after {
+    opacity: 1;
+    right: 0;
+
+}
+#submitButton:active {
+    background-color: rgba(20, 20, 20, 0.5);
+    transition:0.15s;
+  }
+
+#titleText{
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    padding:10px 10px 0px 10px;
+    font-size:48px;
+}
