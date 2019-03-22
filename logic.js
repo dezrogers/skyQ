@@ -101,6 +101,9 @@ console.log(54);
     e.preventDefault();
     $(".hidden").show();
 
+    //move intro area to top
+    $("#introArea").css("padding", "0");
+    $("#introArea").css("transition","1s");
 
     // Add to clickCounter
     clickCounter++;
