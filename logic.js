@@ -210,48 +210,31 @@ console.log(54);
       $("#city-name").append(pCity);
       $("#weather-forecast").append(wIcon, pWeather, pTemp);
       $("tbody>tr").append(pClouds, pHumid, pWindSpeed, pWindDeg);
-  
-
 
     })
-
-  })
-
-  database.ref().on("value", function(snapshot) {
-
-    console.log(snapshot.val());
-
-    clickCounter = snapshot.val().clickCount;
-
-    $("#click-value").text(snapshot.val().clickCount);
-
-    }, function(errorObject) {
-
-    console.log("The read failed: " + errorObject.code);
-  });
-
-// Code from webGLEarth -----
+  
+// Code from webGLEarth 
 function initialize() {
   // refer to documentation to set options. center on iss and rotate with if possible
-  var options = {atmosphere: true, center: [0, 0], zoom: 0};
+  var options = {center: [0, 0], zoom: 0};
   var earth = new WE.map('issDiv', options);
   // change texture of map
   WE.tileLayer('http://tileserver.maptiler.com/nasa/{z}/{x}/{y}.jpg', {
     minZoom: 0,
-    maxZoom: 5,
+    maxZoom: 0,
     attribution: 'NASA'
   }).addTo(earth);
 
   
 // rotation animation
 var before = null;
-      requestAnimationFrame(function animate(now) {
-          var c = earth.getPosition();
-          var elapsed = before? now - before: 0;
-          before = now;
-          earth.setCenter([c[0], c[1] + 0.1*(elapsed/30)]);
-          requestAnimationFrame(animate);
-      });
+    requestAnimationFrame(function animate(now) {
+        var c = earth.getPosition();
+        var elapsed = before? now - before: 0;
+        before = now;
+        earth.setCenter([c[0], c[1] + 0.1*(elapsed/30)]);
+        requestAnimationFrame(animate);
+    });
 
 // ISS ajax api call -- collect lat/lon cleanly
 var queryISSURL = "http://api.open-notify.org/iss-now.json";
@@ -268,10 +251,30 @@ var queryISSURL = "http://api.open-notify.org/iss-now.json";
       var marker = WE.marker([lat, lon]).addTo(earth)
       marker.bindPopup('<b>Hello World</b>'); 
   })
-// closing tag for intialize function
+// closing tag for intialize globe function
 }
 
 initialize();
+
+// submit on click closing tag
+})
+
+  database.ref().on("value", function(snapshot) {
+
+    console.log(snapshot.val());
+
+    clickCounter = snapshot.val().clickCount;
+
+    $("#click-value").text(snapshot.val().clickCount);
+
+    }, function(errorObject) {
+
+    console.log("The read failed: " + errorObject.code);
+  });
+
+
+
+
 
 // document ready closing tag!!!!!
 })
