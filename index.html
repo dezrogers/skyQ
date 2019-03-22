@@ -25,7 +25,7 @@
             <h1 class="animated fadeInDown" id="titleText">skyQ <i class="fas fa-rocket"></i></h1>
             <!-- Bar below the project title -->
             <div class="row" id="topBar">
-                <div class="col-md-2"></div>
+                <div class="col-md-3"></div>
 
                 <div class="col-md-3">
                     <input type="number" class="form-control" id="zipCode" placeholder="">
@@ -37,11 +37,11 @@
                     <input type="date" class="form-control" id="date" placeholder="XX/XX/XXXX">
                 </div>
 
-                <div class="col-md-1">
+                <div class="col-md-2">
                     <button type="button" id="submitButton" class="btn btn-primary"><span>Submit</span></button>
                 </div>
 
-                <div class="col-md-3"></div>
+                <div class="col-md-1"></div>
             </div>
         </div>
 
@@ -53,21 +53,17 @@
             </div>
         </div>    
 
-        <div class="row" id="planetsMoon">
-            <div class="col-md-6 hidden" id="nearEarth">
-                Near earth
-            </div>
-
-            <div class="col-md-6 hidden" id="moonPhases">
-                Moon phases
+        <div class="row" id="planets">
+            <div class="col-md-12 p-3 hidden">
+                <div class="embed-responsive embed-responsive-21by9" id="moonPhases"></div>
             </div>
         </div>
                 
                 
                 
                 <!-- Div for weather information -->
-                <div class="row p-4 hidden" id="weatherDiv">
-                    <div class="col-md-12">
+                <div class="row hidden" id="weatherDiv">
+                    <div class="col-md-12 p-3">
                         <div class="row">
                             <div class="col-md-12" id="city-name"></div>
                         </div>
@@ -75,7 +71,7 @@
                             <div class="col-md-12 text-center mt-3" id="weather-forecast"></div>
                         </div>
                         <div class="row">
-                            <!-- <div class="col-md-12" id="weather-forecast"></div> -->
+                            <div class="col-md-12" id="weather-forecast"></div>
                             <div class="col-md-12 text-center mt-3" id="weather-table">
                                 <table class="table text-light table-responsive-md">
                                     <thead>
@@ -93,7 +89,6 @@
                             </div>
                         </div>
                     </div>
-                    
                 </div>
                 <div class="row">
                             <div class="col-md-12 hidden" id="clicker">
