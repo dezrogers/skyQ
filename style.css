@@ -1,5 +1,5 @@
 body {
-    background: url(images/background2.jpg);
+    background: url(images/background4.jpeg);
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-position: center;
@@ -48,10 +48,10 @@ h2 {
 }
 
 #issDiv {
+    text-align: center;
     background-color: rgba(0, 0, 0, 0.705);
     height: 450px;
     color: white;
-    width: 100%;
     border-radius: 25px;
 }
 
