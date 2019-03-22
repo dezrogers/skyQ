@@ -115,7 +115,7 @@ console.log(54);
     console.log(date);
     console.log(date2);
 
-    // this totally works w00t
+    /* // called down in webGLearth function
     var queryISSURL = "http://api.open-notify.org/iss-now.json";
 
     $.ajax({
@@ -131,7 +131,7 @@ console.log(54);
       // var issLatLon = JSON.stringify(issLatitude, issLongitude);
       $("#iss").append('Latitude: ' + issLatitude + ' Longitude: ' + issLongitude);
       console.log("the code for the iss coordinates ran once");
-    });
+    }); */
 
     // moonphase api call --- populate into table?
     function moonPhase() {
@@ -215,12 +215,54 @@ console.log(54);
       $("#city-name").append(pCity);
       $("#weather-forecast").append(wIcon, pWeather, pTemp);
       $("tbody>tr").append(pClouds, pHumid, pWindSpeed, pWindDeg);
-  
-
 
     })
+  
+// Code from webGLEarth 
+function initialize() {
+  // refer to documentation to set options. center on iss and rotate with if possible
+  var options = {center: [0, 0], zoom: 0};
+  var earth = new WE.map('issDiv', options);
+  // change texture of map
+  WE.tileLayer('http://tileserver.maptiler.com/nasa/{z}/{x}/{y}.jpg', {
+    minZoom: 0,
+    maxZoom: 0,
+    attribution: 'NASA'
+  }).addTo(earth);
 
+  
+// rotation animation
+var before = null;
+    requestAnimationFrame(function animate(now) {
+        var c = earth.getPosition();
+        var elapsed = before? now - before: 0;
+        before = now;
+        earth.setCenter([c[0], c[1] + 0.1*(elapsed/30)]);
+        requestAnimationFrame(animate);
+    });
+
+// ISS ajax api call -- collect lat/lon cleanly
+var queryISSURL = "http://api.open-notify.org/iss-now.json";
+  $.ajax({
+      url: queryISSURL,
+      method: "GET"
+  }).then(function(response) {
+      console.log(response);
+      var lat = response.iss_position.latitude;
+      var lon = response.iss_position.longitude;
+      console.log(lat);
+      console.log(lon);
+      // marker basic. pass in ISS value here? edit: hell yesssssss
+      var marker = WE.marker([lat, lon]).addTo(earth)
+      marker.bindPopup('<b>Hello World</b>'); 
   })
+// closing tag for intialize globe function
+}
+
+initialize();
+
+// submit on click closing tag
+})
 
   database.ref().on("value", function(snapshot) {
 
@@ -235,4 +277,10 @@ console.log(54);
     console.log("The read failed: " + errorObject.code);
   });
 
+
+
+
+
+// document ready closing tag!!!!!
 })
+
