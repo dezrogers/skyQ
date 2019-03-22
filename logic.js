@@ -107,6 +107,8 @@ console.log(54);
 
     var date = $('#date').val().toString();
     var date2 = moment(date).format('MM/DD/YYYY');
+    // another date var for iframe star chart*
+    
     console.log(date);
     console.log(date2);
 
@@ -219,7 +221,7 @@ function initialize() {
   var options = {center: [0, 0], zoom: 0};
   var earth = new WE.map('issDiv', options);
   // change texture of map
-  WE.tileLayer('http://tileserver.maptiler.com/nasa/{z}/{x}/{y}.jpg', {
+  WE.tileLayer('https://tileserver.maptiler.com/nasa/{z}/{x}/{y}.jpg', {
     minZoom: 0,
     maxZoom: 0,
     attribution: 'NASA'
@@ -249,7 +251,7 @@ var queryISSURL = "http://api.open-notify.org/iss-now.json";
       console.log(lon);
       // marker basic. pass in ISS value here? edit: hell yesssssss
       var marker = WE.marker([lat, lon]).addTo(earth)
-      marker.bindPopup('<b>Hello World</b>'); 
+      marker.bindPopup('<b>Hello World!</b>'); 
   })
 // closing tag for intialize globe function
 }
