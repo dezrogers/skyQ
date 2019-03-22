@@ -2,4 +2,9 @@ bugs
     ISS COORDINATES DISPLAY:
     lat/lon for iss formatting
     have to press submit button twice to display coordinates
-    sometimes coordinates blink in and out?
+    sometimes coordinates blink in and out? (empty method?)
+
+stuff to do
+    hide weather and event divs on page load. on submit click show again
+    general polishing
+    
