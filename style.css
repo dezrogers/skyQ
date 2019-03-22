@@ -73,17 +73,15 @@ h2 {
 #submitButton {
     background-color: rgba(0, 0, 0, 0.705);
     border-color: rgba(255, 255, 255, 0.438);
-    transition: all 0.3s;
     cursor: pointer;
-    border-radius: 10px;
-    box-shadow: 0 6px #999;
+    border-radius: 10px; 
 }
   
 #submitButton span {
     cursor: pointer;
     display: inline-block;
     position: relative;
-    transition: 0.3s;
+    transition: 0.3s;  
 }
   
 #submitButton span:after {
@@ -98,12 +96,23 @@ h2 {
 #submitButton:hover span {
     padding-right: 25px;
 }
+#submitButton:hover{
+    background-color: rgba(20, 20, 20, 0.5);
+}
   
 #submitButton:hover span:after {
     opacity: 1;
     right: 0;
-  }
+
+}
 #submitButton:active {
-    box-shadow: 0 5px #666;
-    transform: translateY(4px);
+    background-color: rgba(20, 20, 20, 0.5);
+    transition:0.15s;
   }
+
+#titleText{
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    padding:10px 10px 0px 10px;
+    font-size:48px;
+}
