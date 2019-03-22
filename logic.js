@@ -24,6 +24,10 @@ $(document).ready(function(){
     storageBucket: "fir-click-counter-7cdb9.appspot.com"
   };
   
+  var date = $('#date').val().toString();
+  var date2 = moment(date).format('MM/DD/YYYY');
+  // another var for iframe star chart*
+  
 
   // FUNCTIONS
   // ---------------------------------
@@ -63,10 +67,9 @@ $(document).ready(function(){
     var vSky = $("<iframe width='900' height='385' frameborder='0' scrolling='no' marginheight='' marginwidth='' src='https://virtualsky.lco.global/embed/index.html?longitude="+lon+"&latitude="+lat+"&projection=gnomic&constellations=true&constellationlabels=true&showplanetlabels=true&meridian=true' allowTransparency='true'></iframe>")
     $("#moonPhases").html(vSky);
   }
-  
+
 
   function getWeather(){
-    // if user denies location queryURL is user input value
     var userLocation = $("#zipCode").val().toString();
     console.log(userLocation);
     
@@ -105,7 +108,7 @@ $(document).ready(function(){
     var options = {center: [0, 0], zoom: 0};
     var earth = new WE.map('issDiv', options);
     // change texture of map
-    WE.tileLayer('http://tileserver.maptiler.com/nasa/{z}/{x}/{y}.jpg', {
+    WE.tileLayer('https://tileserver.maptiler.com/nasa/{z}/{x}/{y}.jpg', {
       minZoom: 0,
       maxZoom: 0,
       attribution: 'NASA'
@@ -123,23 +126,45 @@ $(document).ready(function(){
         });
 
     // ISS ajax api call -- collect lat/lon cleanly
-    var queryISSURL = "http://api.open-notify.org/iss-now.json";
+    var queryISSURL = "https://api.wheretheiss.at/v1/satellites/25544";
       $.ajax({
           url: queryISSURL,
           method: "GET"
       }).then(function(response) {
-          console.log(response);
-          var lat = response.iss_position.latitude;
-          var lon = response.iss_position.longitude;
-          console.log(lat);
-          console.log(lon);
+          $("#iss").empty();
+          console.log(response); 
+          // print iss coordinates to neo div
+          var issLatitude = JSON.stringify(response.latitude);
+          var issLongitude = JSON.stringify(response.longitude);
+          console.log('Latitude: ' + issLatitude, 'Longitude: ' + issLongitude);
+          // var issLatLon = JSON.stringify(issLatitude, issLongitude);
+          $("#iss").append('Latitude: ' + issLatitude + ' Longitude: ' + issLongitude);
+          console.log("the code for the iss coordinates ran once");
+
           // marker basic. pass in ISS value here? edit: hell yesssssss
-          var marker = WE.marker([lat, lon]).addTo(earth)
-          marker.bindPopup('<b>Hello World</b>'); 
+          var marker = WE.marker([issLatitude, issLongitude]).addTo(earth)
+          marker.bindPopup('<b>Hello World!</b>'); 
       })
     // closing tag for intialize globe function
   }
 
+    //  // called down in webGLearth function
+    //  var queryISSURL = "https://api.wheretheiss.at/v1/satellites/25544";
+
+    //  $.ajax({
+    //    url: queryISSURL,
+    //    method: "GET"
+    //  }).then(function(response) {
+    //    $("#iss").empty();
+    //    console.log(response); 
+    //    // print iss coordinates to neo div
+    //    var issLatitude = JSON.stringify(response.latitude);
+    //    var issLongitude = JSON.stringify(response.longitude);
+    //    console.log('Latitude: ' + issLatitude, 'Longitude: ' + issLongitude);
+    //    // var issLatLon = JSON.stringify(issLatitude, issLongitude);
+    //    $("#iss").append('Latitude: ' + issLatitude + ' Longitude: ' + issLongitude);
+    //    console.log("the code for the iss coordinates ran once");
+    //  });
 
   // EVENTS
   // ---------------------------------------------------------
@@ -170,7 +195,9 @@ $(document).ready(function(){
     e.preventDefault();
     $(".hidden").show();
 
-    $("#introArea").css("padding-top", "0");
+    //move intro area to top
+    $("#introArea").css("padding", "0");
+    $("#introArea").css("transition","1s");
 
     // Add to clickCounter
     clickCounter++;
