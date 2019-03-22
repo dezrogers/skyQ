@@ -120,8 +120,8 @@ console.log(54);
     console.log(date);
     console.log(date2);
 
-    /* // called down in webGLearth function
-    var queryISSURL = "http://api.open-notify.org/iss-now.json";
+    // called down in webGLearth function
+    var queryISSURL = "https://api.wheretheiss.at/v1/satellites/25544";
 
     $.ajax({
       url: queryISSURL,
@@ -130,13 +130,13 @@ console.log(54);
       $("#iss").empty();
       console.log(response); 
       // print iss coordinates to neo div
-      var issLatitude = JSON.stringify(response.iss_position.latitude);
-      var issLongitude = JSON.stringify(response.iss_position.longitude);
+      var issLatitude = JSON.stringify(response.latitude);
+      var issLongitude = JSON.stringify(response.longitude);
       console.log('Latitude: ' + issLatitude, 'Longitude: ' + issLongitude);
       // var issLatLon = JSON.stringify(issLatitude, issLongitude);
       $("#iss").append('Latitude: ' + issLatitude + ' Longitude: ' + issLongitude);
       console.log("the code for the iss coordinates ran once");
-    }); */
+    });
 
     // moonphase api call --- populate into table?
     function moonPhase() {
