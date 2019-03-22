@@ -24,11 +24,9 @@ $(document).ready(function(){
     storageBucket: "fir-click-counter-7cdb9.appspot.com"
   };
   
-console.log(28);
 
   // FUNCTIONS
   // ---------------------------------
-
   function success(pos) {
 
     var crd = pos.coords;
@@ -38,6 +36,7 @@ console.log(28);
     lon = crd.longitude;
     acc = crd.accuracy;
   }
+
 
   function error(err) {
       console.warn(`ERROR(${err.code}): ${err.message}`);
@@ -62,7 +61,6 @@ console.log(28);
 
   function virtualSky(){
     var vSky = $("<iframe width='900' height='385' frameborder='0' scrolling='no' marginheight='' marginwidth='' src='https://virtualsky.lco.global/embed/index.html?longitude="+lon+"&latitude="+lat+"&projection=gnomic&constellations=true&constellationlabels=true&showplanetlabels=true&meridian=true' allowTransparency='true'></iframe>")
-
     $("#moonPhases").html(vSky);
   }
   
@@ -74,14 +72,13 @@ console.log(28);
     
     weatherQueryURL = "https://api.openweathermap.org/data/2.5/weather?zip="+userLocation+"&units=imperial&appid="+weatherAPIKey;
   
-
     // Weather API - current temp
     $.ajax ({
       url: weatherQueryURL,
       method: "GET"
     }).then(function(response) {
 
-      // log the resulting object
+      // display HTML
       var pCity = $("<h1>").text(response.name+", "+response.sys.country);
       var pWeather = $("<h4>").text(response.weather[0].main);
       var pTemp = $("<p>").text("low "+ Math.floor(response.main.temp_min) +"° | "+ "high "+ Math.floor(response.main.temp_max) +"°");
@@ -173,6 +170,8 @@ console.log(28);
     e.preventDefault();
     $(".hidden").show();
 
+    $("#introArea").css("padding-top", "0");
+
     // Add to clickCounter
     clickCounter++;
 
@@ -189,20 +188,15 @@ console.log(28);
   })
 
   database.ref().on("value", function(snapshot) {
-
     console.log(snapshot.val());
-
     clickCounter = snapshot.val().clickCount;
-
     $("#click-value").text(snapshot.val().clickCount);
-
     }, function(errorObject) {
-
     console.log("The read failed: " + errorObject.code);
   });
 
 
-// submit on click closing tag
+// document.ready closing tag
 })
 
 
