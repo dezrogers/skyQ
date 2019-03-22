@@ -120,23 +120,7 @@ console.log(54);
     console.log(date);
     console.log(date2);
 
-     // called down in webGLearth function
-     var queryISSURL = "https://api.wheretheiss.at/v1/satellites/25544";
-
-     $.ajax({
-       url: queryISSURL,
-       method: "GET"
-     }).then(function(response) {
-       $("#iss").empty();
-       console.log(response); 
-       // print iss coordinates to neo div
-       var issLatitude = JSON.stringify(response.latitude);
-       var issLongitude = JSON.stringify(response.longitude);
-       console.log('Latitude: ' + issLatitude, 'Longitude: ' + issLongitude);
-       // var issLatLon = JSON.stringify(issLatitude, issLongitude);
-       $("#iss").append('Latitude: ' + issLatitude + ' Longitude: ' + issLongitude);
-       console.log("the code for the iss coordinates ran once");
-     });
+    
 
     // moonphase api call --- populate into table?
     function moonPhase() {
@@ -245,22 +229,40 @@ var before = null;
         earth.setCenter([c[0], c[1] + 0.1*(elapsed/30)]);
         requestAnimationFrame(animate);
     });
+ // called down in webGLearth function
+     var queryISSURL = "https://api.wheretheiss.at/v1/satellites/25544";
 
-// ISS ajax api call -- collect lat/lon cleanly
-var queryISSURL = "http://api.open-notify.org/iss-now.json";
-  $.ajax({
-      url: queryISSURL,
-      method: "GET"
-  }).then(function(response) {
-      console.log(response);
-      var lat = response.iss_position.latitude;
-      var lon = response.iss_position.longitude;
-      console.log(lat);
-      console.log(lon);
-      // marker basic. pass in ISS value here? edit: hell yesssssss
+     $.ajax({
+       url: queryISSURL,
+       method: "GET"
+     }).then(function(response) {
+       $("#iss").empty();
+       console.log(response); 
+       // print iss coordinates to neo div
+       var issLatitude = JSON.stringify(response.latitude);
+       var issLongitude = JSON.stringify(response.longitude);
+       console.log('Latitude: ' + issLatitude, 'Longitude: ' + issLongitude);
+       // var issLatLon = JSON.stringify(issLatitude, issLongitude);
+       $("#iss").append('Latitude: ' + issLatitude + ' Longitude: ' + issLongitude);
+       console.log("the code for the iss coordinates ran once");
+       // marker basic. pass in ISS value here? edit: hell yesssssss
       var marker = WE.marker([lat, lon]).addTo(earth)
       marker.bindPopup('<b>Hello World!</b>'); 
-  })
+     });
+     
+// ISS ajax api call -- collect lat/lon cleanly
+// var queryISSURL = "http://api.open-notify.org/iss-now.json";
+//   $.ajax({
+//       url: queryISSURL,
+//       method: "GET"
+//   }).then(function(response) {
+//       console.log(response);
+//       var lat = response.iss_position.latitude;
+//       var lon = response.iss_position.longitude;
+//       console.log(lat);
+//       console.log(lon);
+      
+//   })
 // closing tag for intialize globe function
 }
 
