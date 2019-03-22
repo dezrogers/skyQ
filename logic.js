@@ -66,44 +66,6 @@ console.log(28);
     $("#moonPhases").html(vSky);
   }
   
-  // moonphase api call --- populate into table?
-  // function moonPhase() {
-  //   var date = $('#date').val().toString();
-  //   var date2 = moment(date).format('MM/DD/YYYY');
-    
-  //   var moonPhaseURL = "https://api.usno.navy.mil/moon/phase?date=" + date2 + "&nump=4";
-
-  //   $.ajax({
-  //     url: moonPhaseURL,
-  //     method: "GET"
-  //   }).then(function(response) {
-  //     $('#moonPhases').empty();
-  //     // populate into #eventsDiv. phasedata [4]
-  //     var phase1 = $('<p>').text('Full Moon: ' + response.phasedata[0].date);
-  //     var phase2 = $('<p>').text('Last Quarter: ' + response.phasedata[1].date);
-  //     var phase3 = $('<p>').text('New Moon: ' + response.phasedata[2].date);
-  //     var phase4 = $('<p>').text('First Quarter: ' + response.phasedata[3].date);
-  //     $("#moonPhases").append(phase1, phase2, phase3, phase4);
-  //   });
-  // }
-
-  /*
-  // Near Earth Objects NASA api key: w6WzGfIJHpH3CYm2kyvIAuej0NwIjBmbh1ywubzT
-  function nearEarth() {
-    var neoWSURL = "https://api.nasa.gov/neo/rest/v1/feed?start_date=" + date + "&api_key=w6WzGfIJHpH3CYm2kyvIAuej0NwIjBmbh1ywubzT";
-
-    $.ajax({
-      url: neoWSURL,
-      method: "GET"
-    }).then(function(response) {
-      console.log(response);
-      $("#nearEarth").empty();
-      var nearEarthObjects = $("<p>");
-      nearEarthObjects.text(response.element_count + " current objects near the Earth")
-      $("#nearEarth").append(nearEarthObjects);
-    });
-  }
-  */
 
   function getWeather(){
     // if user denies location queryURL is user input value
@@ -140,6 +102,48 @@ console.log(28);
     })
   } 
 
+  // Code from webGLEarth -----
+  function initialize() {
+    // refer to documentation to set options. center on iss and rotate with if possible
+    var options = {center: [0, 0], zoom: 0};
+    var earth = new WE.map('issDiv', options);
+    // change texture of map
+    WE.tileLayer('http://tileserver.maptiler.com/nasa/{z}/{x}/{y}.jpg', {
+      minZoom: 0,
+      maxZoom: 0,
+      attribution: 'NASA'
+    }).addTo(earth);
+
+    
+    // rotation animation
+    var before = null;
+        requestAnimationFrame(function animate(now) {
+            var c = earth.getPosition();
+            var elapsed = before? now - before: 0;
+            before = now;
+            earth.setCenter([c[0], c[1] + 0.1*(elapsed/30)]);
+            requestAnimationFrame(animate);
+        });
+
+    // ISS ajax api call -- collect lat/lon cleanly
+    var queryISSURL = "http://api.open-notify.org/iss-now.json";
+      $.ajax({
+          url: queryISSURL,
+          method: "GET"
+      }).then(function(response) {
+          console.log(response);
+          var lat = response.iss_position.latitude;
+          var lon = response.iss_position.longitude;
+          console.log(lat);
+          console.log(lon);
+          // marker basic. pass in ISS value here? edit: hell yesssssss
+          var marker = WE.marker([lat, lon]).addTo(earth)
+          marker.bindPopup('<b>Hello World</b>'); 
+      })
+    // closing tag for intialize globe function
+  }
+
+
   // EVENTS
   // ---------------------------------------------------------
   // run geolocation code. success, failure, and the last argument failure.
@@ -148,11 +152,16 @@ console.log(28);
   var today = moment().format("YYYY-MM-DD");
   $("#date").attr("value", today);
   
-  setTimeout(display, 10000);
+  $("#zipCode").attr("placeholder", "Determining Location...");
+
+  setTimeout(display, 12000);
+
+  //changes "determining location" to "Enter Zipcode" after determining location is called
+  setTimeout(function() {
+    $("#zipCode").attr("placeholder", "Enter Zipcode");
+  }, 15000);
 
   $(".hidden").hide();
-  
-  $("#zipCode").attr("placeholder", "Determining Location...");
 
   firebase.initializeApp(config);
 
@@ -172,31 +181,11 @@ console.log(28);
       clickCount: clickCounter
     });
 
-
-
-    /* // called down in webGLearth function
-    var queryISSURL = "http://api.open-notify.org/iss-now.json";
-
-    $.ajax({
-      url: queryISSURL,
-      method: "GET"
-    }).then(function(response) {
-      $("#iss").empty();
-      console.log(response); 
-      // print iss coordinates to neo div
-      var issLatitude = JSON.stringify(response.iss_position.latitude);
-      var issLongitude = JSON.stringify(response.iss_position.longitude);
-      console.log('Latitude: ' + issLatitude, 'Longitude: ' + issLongitude);
-      // var issLatLon = JSON.stringify(issLatitude, issLongitude);
-      $("#iss").append('Latitude: ' + issLatitude + ' Longitude: ' + issLongitude);
-      console.log("the code for the iss coordinates ran once");
-    }); */
-
+    virtualSky();
 
     getWeather();
 
-    virtualSky();
-
+    initialize();
   })
 
   database.ref().on("value", function(snapshot) {
@@ -212,49 +201,8 @@ console.log(28);
     console.log("The read failed: " + errorObject.code);
   });
 
-// Code from webGLEarth -----
-function initialize() {
-  // refer to documentation to set options. center on iss and rotate with if possible
-  var options = {atmosphere: true, center: [0, 0], zoom: 0};
-  var earth = new WE.map('issDiv', options);
-  // change texture of map
-  WE.tileLayer('http://tileserver.maptiler.com/nasa/{z}/{x}/{y}.jpg', {
-    minZoom: 0,
-    maxZoom: 5,
-    attribution: 'NASA'
-  }).addTo(earth);
 
-  
-  // rotation animation
-  var before = null;
-        requestAnimationFrame(function animate(now) {
-            var c = earth.getPosition();
-            var elapsed = before? now - before: 0;
-            before = now;
-            earth.setCenter([c[0], c[1] + 0.1*(elapsed/30)]);
-            requestAnimationFrame(animate);
-        });
-
-  // ISS ajax api call -- collect lat/lon cleanly
-  var queryISSURL = "http://api.open-notify.org/iss-now.json";
-    $.ajax({
-        url: queryISSURL,
-        method: "GET"
-    }).then(function(response) {
-        console.log(response);
-        var lat = response.iss_position.latitude;
-        var lon = response.iss_position.longitude;
-        console.log("ISS Latitude: "+ lat);
-        console.log("ISS Longitude: "+ lon);
-        // marker basic. pass in ISS value here? edit: hell yesssssss
-        var marker = WE.marker([lat, lon]).addTo(earth)
-        marker.bindPopup('<b>Hello World</b>'); 
-    })
-// closing tag for intialize function
-}
-
-initialize();
-
-// document ready closing tag!!!!!
+// submit on click closing tag
 })
+
 

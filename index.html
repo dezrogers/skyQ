@@ -12,39 +12,36 @@
     <script src="http://www.webglearth.com/v2/api.js"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat|PT+Sans+Narrow" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <header>
-        <h1 class="animated flash">skyQ</h1>
+        <h1 class="animated fadeInDown" id="titleText">skyQ <i class="fas fa-rocket"></i></h1>
     </header>
     <div class="container">
         <!-- Bar below the project title -->
         <div class="row" id="topBar">
-            <div class="col-md-2"></div>
+            <div class="col-md-3"></div>
 
             <div class="col-md-3">
                 <input type="number" class="form-control" id="zipCode" placeholder="">
             </div>
 
-            
-
             <div class="col-md-3">
                 <input type="date" class="form-control" id="date" placeholder="XX/XX/XXXX">
             </div>
 
-            <div class="col-md-1">
-                <button type="button" id="submitButton" class="btn btn-primary">Submit</button>
+            <div class="col-md-2">
+                <button type="button" id="submitButton" class="btn btn-primary"><span>Submit</span></button>
             </div>
 
-            <div class="col-md-3"></div>
-
+            <div class="col-md-1"></div>
         </div>
 
         <div class="row" id="contentRow">
-            <div class="col-md-12 hidden" id="issDiv">
-                
-            </div>
+            <div class="col-md-12 hidden" id="issDiv"></div>
         </div>    
 
         <div class="row" id="planets">
@@ -56,8 +53,8 @@
                 
                 
                 <!-- Div for weather information -->
-                <div class="row p-4 hidden" id="weatherDiv">
-                    <div class="col-md-12">
+                <div class="row hidden" id="weatherDiv">
+                    <div class="col-md-12 p-3">
                         <div class="row">
                             <div class="col-md-12" id="city-name"></div>
                         </div>
