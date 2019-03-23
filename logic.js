@@ -84,9 +84,9 @@ $(document).ready(function(){
       // display HTML
       var pCity = $("<h1>").text(response.name+", "+response.sys.country);
       var pWeather = $("<h4>").text(response.weather[0].main);
-      var pTemp = $("<td>").text(Math.floor(response.main.temp));
+      var pTemp = $("<td>").text(Math.floor(response.main.temp) + "° F");
       var pClouds = $("<td>").text(response.clouds.all +"%");
-      var pHumid = $("<td>").text(response.main.humidity+" %");
+      var pHumid = $("<td>").text(response.main.humidity+"%");
       var pWindSpeed = $("<td>").text(Math.floor(response.wind.speed) + " mph");
       
       var iconCode = response.weather[0].icon;
@@ -170,7 +170,7 @@ $(document).ready(function(){
   setTimeout(function() {
     $("#date").attr("value", today);
     $("#zipCode").attr("placeholder", "Enter Zipcode");
-  }, 15000);
+  }, 12000);
 
   $(".hidden").hide();
 
