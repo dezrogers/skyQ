@@ -1,110 +1,102 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Project One</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+        integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+        crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.js"></script>
     <script src="https://www.gstatic.com/firebasejs/4.12.0/firebase.js"></script>
     <script src="https://www.webglearth.com/v2/api.js"></script>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
     <link href="https://fonts.googleapis.com/css?family=Montserrat|PT+Sans+Narrow" rel="stylesheet">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+        integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
-    <header>
-        
-    </header>
     <div class="container">
         <div id="introArea">
-            <h1 class="animated fadeInDown" id="titleText">skyQ <i class="fas fa-rocket"></i></h1>
+            <div class="row">
+                <div class="col-md-12">
+                    <h1 class="animated fadeInDown" id="titleText">skyQ <i class="fas fa-rocket"></i></h1>
+                </div>
+            </div>
             <!-- Bar below the project title -->
             <div class="row" id="topBar">
-                <div class="col-md-2"></div>
 
-                <div class="col-md-3">
-                    <input type="number" class="form-control" id="zipCode" placeholder="">
+                <div class="col-12">
+                    <form class="form-inline">
+                        <div class="form-group mx-auto">
+                            <input type="number" class="form-control" id="zipCode" placeholder="">
+                            <input type="date" class="form-control" id="date" placeholder="XX/XX/XXXX">
+                            <button type="button" id="submitButton" class="btn btn-primary"><span>Submit</span></button>
+                        </div>
+                    </form>
                 </div>
-
-                
-
-                <div class="col-md-3">
-                    <input type="date" class="form-control" id="date" placeholder="XX/XX/XXXX">
-                </div>
-
-                <div class="col-md-1">
-                    <button type="button" id="submitButton" class="btn btn-primary"><span>Submit</span></button>
-                </div>
-
-                <div class="col-md-3"></div>
             </div>
         </div>
 
         <div class="row" id="contentRow">
-
             <div class="col-md-12 hidden" id="issDiv">
-                <h2>Where's the ISS right now?</h2>
-                
-            </div>
-        </div>    
-
-        <div class="row" id="planetsMoon">
-            <div class="col-md-6 hidden" id="nearEarth">
-                Near earth
-            </div>
-
-            <div class="col-md-6 hidden" id="moonPhases">
-                Moon phases
+                <h2 class="mt-2">Where's the ISS right now?</h2>
             </div>
         </div>
-                
-                
-                
-                <!-- Div for weather information -->
-                <div class="row p-4 hidden" id="weatherDiv">
-                    <div class="col-md-12">
-                        <div class="row">
-                            <div class="col-md-12" id="city-name"></div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12 text-center mt-3" id="weather-forecast"></div>
-                        </div>
-                        <div class="row">
-                            <!-- <div class="col-md-12" id="weather-forecast"></div> -->
-                            <div class="col-md-12 text-center mt-3" id="weather-table">
-                                <table class="table text-light table-responsive-md">
-                                    <thead>
-                                        <tr class="">
-                                            <th scope="col">Current Temp</th>
-                                            <th scope="col">Clouds</th>
-                                            <th scope="col">Humidity</th>
-                                            <th scope="col">Wind Speed</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr></tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                    
+
+        <div class="row" id="planets">
+            <div class="col-md-12 p-3 hidden">
+                <div class="embed-responsive embed-responsive-21by9" id="moonPhases"></div>
+            </div>
+        </div>
+
+
+
+        <!-- Div for weather information -->
+        <div class="row hidden" id="weatherDiv">
+            <div class="col-md-12 p-3">
+                <div class="row">
+                    <div class="col-md-12" id="city-name"></div>
                 </div>
                 <div class="row">
-                            <div class="col-md-12 hidden" id="clicker">
-                                <h2>We've checked out the stars <span id="click-value">#</span> times!</h2>
-                            </div>
-                        </div>
+                    <div class="col-md-12 text-center mt-3" id="weather-forecast"></div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12" id="weather-forecast"></div>
+                    <div class="col-md-12 text-center mt-3" id="weather-table">
+                        <table class="table text-light table-responsive-md">
+                            <thead>
+                                <tr class="">
+                                    <th scope="col">Current Temp</th>
+                                    <th scope="col">Clouds</th>
+                                    <th scope="col">Humidity</th>
+                                    <th scope="col">Wind Speed</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>    
-        
-    <script type="text/javascript" src ="logic.js"></script>
+        <div class="row">
+            <div class="col-md-12 hidden" id="clicker">
+                <h2>We've checked out the stars <span id="click-value">#</span> times!</h2>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript" src="logic.js"></script>
 
 </body>
+
 </html>
