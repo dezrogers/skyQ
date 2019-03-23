@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Project One</title>
+    <title>skyQ | Home</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
@@ -27,7 +27,7 @@
         <div id="introArea">
             <div class="row">
                 <div class="col-md-12 mx-auto">
-                    <h1 class="animated fadeInDown" id="titleText">skyQ <i class="fas fa-rocket"></i></h1>
+                    <h1 class="animated fadeInDown" id="titleText"> skyQ <i class="fas fa-rocket"></i></h1>
                 </div>
             </div>
             <!-- Bar below the project title -->
@@ -37,15 +37,14 @@
                     <form>
                         <div class="form-row text-center">
                             <div class="col-md-5 form-group">
-
                                 <input type="number" class="form-control" id="zipCode" placeholder="">
                             </div>
                             <div class="col-md-5 form-group">
                                 <input type="date" class="form-control" id="date" placeholder="XX/XX/XXXX">
                             </div>
                             <div class="col-md-2">
-
-                                <button type="button" id="submitButton" class="btn btn-outline-light"><span>Submit</span></button>
+                                <button type="button" id="submitButton"
+                                    class="btn btn-outline-light"><span>Submit</span></button>
                             </div>
                         </div>
                     </form>
@@ -54,36 +53,39 @@
             </div>
         </div>
 
-        <div class="row" id="contentRow">
-            <div class="col-md-12 hidden" id="issDiv">
-                <h2 class="mt-2">Where's the ISS right now?</h2>
+        <!-- ISS Display -->
+        <div class="row">
+            <div class="col-md-12 hidden content" id="issDiv">
+                <h2>Where's the ISS right now?</h2>
             </div>
         </div>
 
-        <div class="row" id="planets">
+        <!-- Planet/Constellations Display -->
+        <div class="row content" id="planets">
             <div class="col-md-12 p-3 hidden">
                 <div class="embed-responsive embed-responsive-21by9" id="moonPhases"></div>
             </div>
         </div>
 
-
-
         <!-- Div for weather information -->
-        <div class="row hidden" id="weatherDiv">
+        <div class="row hidden content" id="weatherDiv">
             <div class="col-md-12 p-3">
+
                 <div class="row">
                     <div class="col-md-12" id="city-name"></div>
                 </div>
+
                 <div class="row">
                     <div class="col-md-12 text-center mt-3" id="weather-forecast"></div>
                 </div>
+
                 <div class="row">
-                    <div class="col-md-12" id="weather-forecast"></div>
-                    <div class="col-md-12 text-center mt-3" id="weather-table">
+                    <div class="col-md-3"></div>
+                    <div class="col-md-6 text-center mt-3" id="weather-table">
                         <table class="table text-light table-responsive-md">
                             <thead>
                                 <tr class="">
-                                    <th scope="col">Current Temp</th>
+                                    <th scope="col">Temp</th>
                                     <th scope="col">Clouds</th>
                                     <th scope="col">Humidity</th>
                                     <th scope="col">Wind Speed</th>
@@ -94,11 +96,14 @@
                             </tbody>
                         </table>
                     </div>
+                    <div class="col-md-3"></div>
                 </div>
             </div>
         </div>
+
+        <!-- Click Counter -->
         <div class="row">
-            <div class="col-md-12 hidden" id="clicker">
+            <div class="col-md-12 hidden content" id="clicker">
                 <h2>We've checked out the stars <span id="click-value">#</span> times!</h2>
             </div>
         </div>

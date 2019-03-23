@@ -4,12 +4,13 @@ $(document).ready(function(){
   // ---------------------------------
   var lat, lon, postCode;
 
+  var runInitialize = 0;
+
   var options = {
       enableHighAccuracy: true,
       timeout: 50000,
       maximumAge: 10
   };
-  console.log(13);
 
   var weatherAPIKey = "b77ed65941bfb419ca54635b571f1301";
   var weatherQueryURL;
@@ -107,8 +108,11 @@ $(document).ready(function(){
 
   // Code from webGLEarth -----
   function initialize() {
+    var issLatitude;
+    var issLongitude;
+    var issLocation = issLatitude + ', ' + issLongitude;
     // refer to documentation to set options. center on iss and rotate with if possible
-    var options = {center: [0, 0], zoom: 0};
+    var options = {center: [issLocation], zoom: 0};
     var earth = new WE.map('issDiv', options);
 
     // change texture of map
@@ -147,8 +151,8 @@ $(document).ready(function(){
         $("#iss").append('Latitude: ' + issLatitude + ' Longitude: ' + issLongitude);
         console.log("the code for the iss coordinates ran once");
 
-        // marker basic. pass in ISS value here? edit: hell yesssssss
-        var marker = WE.marker([issLatitude, issLongitude]).addTo(earth)
+        // marker basic
+        var marker = WE.marker([issLatitude, issLongitude], 'images/icons8-satellite-64.png', 64, 64).addTo(earth)
         marker.bindPopup('<b>Hello World!</b>'); 
      });
     // closing tag for intialize globe function
@@ -181,6 +185,7 @@ $(document).ready(function(){
 
   // var with date to pass into api parameters
   $('#submitButton').on('click', function(e) {
+    runInitialize++;
     e.preventDefault();
     $(".hidden").show();
 
@@ -199,8 +204,11 @@ $(document).ready(function(){
     virtualSky();
 
     getWeather();
-
-    initialize();
+    
+    if (runInitialize < 2){
+      initialize();
+    }
+    
   })
 
   database.ref().on("value", function(snapshot) {
