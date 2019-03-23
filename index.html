@@ -26,22 +26,31 @@
     <div class="container">
         <div id="introArea">
             <div class="row">
-                <div class="col-md-12">
+                <div class="col-md-12 mx-auto">
                     <h1 class="animated fadeInDown" id="titleText">skyQ <i class="fas fa-rocket"></i></h1>
                 </div>
             </div>
             <!-- Bar below the project title -->
             <div class="row" id="topBar">
+                <div class="col-md-2"></div>
+                <div class="col-md-8">
+                    <form>
+                        <div class="form-row text-center">
+                            <div class="col-md-5 form-group">
 
-                <div class="col-12">
-                    <form class="form-inline">
-                        <div class="form-group mx-auto">
-                            <input type="number" class="form-control" id="zipCode" placeholder="">
-                            <input type="date" class="form-control" id="date" placeholder="XX/XX/XXXX">
-                            <button type="button" id="submitButton" class="btn btn-primary"><span>Submit</span></button>
+                                <input type="number" class="form-control" id="zipCode" placeholder="">
+                            </div>
+                            <div class="col-md-5 form-group">
+                                <input type="date" class="form-control" id="date" placeholder="XX/XX/XXXX">
+                            </div>
+                            <div class="col-md-2">
+
+                                <button type="button" id="submitButton" class="btn btn-outline-light"><span>Submit</span></button>
+                            </div>
                         </div>
                     </form>
                 </div>
+                <div class="col-md-2"></div>
             </div>
         </div>
 
