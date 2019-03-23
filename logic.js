@@ -107,8 +107,11 @@ $(document).ready(function(){
 
   // Code from webGLEarth -----
   function initialize() {
+    var issLatitude;
+    var issLongitude;
+    var issLocation = issLatitude + ', ' + issLongitude;
     // refer to documentation to set options. center on iss and rotate with if possible
-    var options = {center: [0, 0], zoom: 0};
+    var options = {center: [issLocation], zoom: 0};
     var earth = new WE.map('issDiv', options);
 
     // change texture of map
@@ -147,8 +150,8 @@ $(document).ready(function(){
         $("#iss").append('Latitude: ' + issLatitude + ' Longitude: ' + issLongitude);
         console.log("the code for the iss coordinates ran once");
 
-        // marker basic. pass in ISS value here? edit: hell yesssssss
-        var marker = WE.marker([issLatitude, issLongitude]).addTo(earth)
+        // marker basic
+        var marker = WE.marker([issLatitude, issLongitude], 'images/icons8-satellite-64.png', 64, 64).addTo(earth)
         marker.bindPopup('<b>Hello World!</b>'); 
      });
     // closing tag for intialize globe function
