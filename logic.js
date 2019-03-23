@@ -4,12 +4,13 @@ $(document).ready(function(){
   // ---------------------------------
   var lat, lon, postCode;
 
+  var runInitialize = 0;
+
   var options = {
       enableHighAccuracy: true,
       timeout: 50000,
       maximumAge: 10
   };
-  console.log(13);
 
   var weatherAPIKey = "b77ed65941bfb419ca54635b571f1301";
   var weatherQueryURL;
@@ -183,6 +184,7 @@ $(document).ready(function(){
 
   // var with date to pass into api parameters
   $('#submitButton').on('click', function(e) {
+    runInitialize++;
     e.preventDefault();
     $(".hidden").show();
 
@@ -201,8 +203,11 @@ $(document).ready(function(){
     virtualSky();
 
     getWeather();
-
-    initialize();
+    
+    if (runInitialize < 2){
+      initialize();
+    }
+    
   })
 
   database.ref().on("value", function(snapshot) {
