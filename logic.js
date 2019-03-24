@@ -101,23 +101,23 @@ $(document).ready(function(){
       // display HTML
       var pCity = $("<h1>").text(response.name+", "+response.sys.country);
       var pWeather = $("<h4>").text(response.weather[0].main);
-      var pTemp = $("<p>").text("low "+ Math.floor(response.main.temp_min) +"° | "+ "high "+ Math.floor(response.main.temp_max) +"°");
+      var pTemp = $("<td>").text(Math.floor(response.main.temp) + "° F");
       var pClouds = $("<td>").text(response.clouds.all +"%");
-      var pHumid = $("<td>").text(response.main.humidity+" %");
+      var pHumid = $("<td>").text(response.main.humidity+"%");
       var pWindSpeed = $("<td>").text(Math.floor(response.wind.speed) + " mph");
-      var pWindDeg = $("<td>").text(response.wind.deg +"°");
       
       var iconCode = response.weather[0].icon;
       var iconUrl = "http://openweathermap.org/img/w/" + iconCode + ".png";
       var wIcon = $("<img>").attr("id", "weather-icon").attr("alt", "Weather Icon").attr("src", iconUrl);
       
-      
+      // Empty data divs
       $("#city-name").empty();
       $("#weather-forecast").empty();
       $("tbody>tr").empty();
+      
       $("#city-name").append(pCity);
-      $("#weather-forecast").append(wIcon, pWeather, pTemp);
-      $("tbody>tr").append(pClouds, pHumid, pWindSpeed, pWindDeg);
+      $("#weather-forecast").append(wIcon, pWeather);
+      $("tbody>tr").append(pTemp, pClouds, pHumid, pWindSpeed);
   
     })
   } 
@@ -180,16 +180,17 @@ $(document).ready(function(){
   navigator.geolocation.getCurrentPosition(success, error, options);
 
   var today = moment().format("YYYY-MM-DD");
-  $("#date").attr("value", today);
   
   $("#zipCode").attr("placeholder", "Determining Location...");
-
+  
   setTimeout(display, 12000);
-
+  
   //changes "determining location" to "Enter Zipcode" after determining location is called
+  //displays "Date" and "Enter Zipcode" at the same time
   setTimeout(function() {
+    $("#date").attr("value", today);
     $("#zipCode").attr("placeholder", "Enter Zipcode");
-  }, 15000);
+  }, 12000);
 
   $(".hidden").hide();
 
