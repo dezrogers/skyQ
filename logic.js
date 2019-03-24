@@ -62,6 +62,23 @@ $(document).ready(function(){
 
     })
   }
+
+  // zipcode geocoding
+  function getLocation(zipCode) {
+    var googleAPIKey = "AIzaSyCV4OMw6b75oXWfFsVQfBLiQVsGnJR4JAs";
+    googleQueryURL = "https://maps.googleapis.com/maps/api/geocode/json?address="+zipCode+"&key="+googleAPIKey+"";
+
+    $.ajax({
+      url: googleQueryURL,
+      method: "GET"
+    }).then(function(response) {
+      console.log(response);
+      lat = response.results[0].geometry.location.lat;
+      lon = response.results[0].geometry.location.lng;
+      console.log("Lat: " +lat +", Lon" + lon);
+    })
+  }
+
   
   // code for constellation
   function virtualSky(){
@@ -70,11 +87,10 @@ $(document).ready(function(){
   }
 
 
-  function getWeather(){
-    var userLocation = $("#zipCode").val().toString();
-    console.log(userLocation);
+  function getWeather(zipCode){
     
-    weatherQueryURL = "https://api.openweathermap.org/data/2.5/weather?zip="+userLocation+"&units=imperial&appid="+weatherAPIKey;
+    
+    weatherQueryURL = "https://api.openweathermap.org/data/2.5/weather?zip="+zipCode+"&units=imperial&appid="+weatherAPIKey;
   
     // Weather API - current temp
     $.ajax ({
@@ -184,6 +200,8 @@ $(document).ready(function(){
 
   // var with date to pass into api parameters
   $('#submitButton').on('click', function(e) {
+    var userLocation = $("#zipCode").val().toString();
+
     runInitialize++;
     e.preventDefault();
     $(".hidden").show();
@@ -200,9 +218,11 @@ $(document).ready(function(){
       clickCount: clickCounter
     });
 
+    getLocation(userLocation);
+
     virtualSky();
 
-    getWeather();
+    getWeather(userLocation);
     
     if (runInitialize < 2){
       initialize();
@@ -221,5 +241,3 @@ $(document).ready(function(){
 
 // document.ready closing tag
 })
-
-
