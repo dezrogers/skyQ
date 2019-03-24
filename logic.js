@@ -71,7 +71,7 @@ $(document).ready(function(){
 
 
   function getWeather(){
-    var userLocation = $("#zipCode").val()toString();
+    var userLocation = $("#zipCode").val().toString();
     console.log(userLocation);
     
     weatherQueryURL = "https://api.openweathermap.org/data/2.5/weather?zip="+userLocation+"&units=imperial&appid="+weatherAPIKey;
