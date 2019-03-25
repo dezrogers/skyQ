@@ -176,8 +176,6 @@ $(document).ready(function(){
   // ---------------------------------------------------------
   // run geolocation code. success, failure, and the last argument failure.
   navigator.geolocation.getCurrentPosition(success, error, options);
-
-  // var today = moment().format("YYYY-MM-DD");
   
   $("#zipCode").attr("placeholder", "Determining Location...");
   
