@@ -6,11 +6,11 @@ $(document).ready(function(){
 
   var runInitialize = 0;
 
-  var options = {
-      enableHighAccuracy: true,
-      timeout: 50000,
-      maximumAge: 10
-  };
+  // var options = {
+  //     enableHighAccuracy: true,
+  //     timeout: 50000,
+  //     maximumAge: 10
+  // };
 
   var weatherAPIKey = "b77ed65941bfb419ca54635b571f1301";
   var weatherQueryURL;
@@ -25,22 +25,22 @@ $(document).ready(function(){
     storageBucket: "fir-click-counter-7cdb9.appspot.com"
   };
   
-  var date = $('#date').val().toString();
-  var date2 = moment(date).format('MM/DD/YYYY');
+  // var date = $('#date').val().toString();
+  // var date2 = moment(date).format('MM/DD/YYYY');
   // another var for iframe star chart date*
   
 
   // FUNCTIONS
   // ---------------------------------
-  function success(pos) {
+  // function success(pos) {
 
-    var crd = pos.coords;
-    console.log(pos);
+  //   var crd = pos.coords;
+  //   console.log(pos);
 
-    lat = crd.latitude;
-    lon = crd.longitude;
-    acc = crd.accuracy;
-  }
+  //   lat = crd.latitude;
+  //   lon = crd.longitude;
+  //   acc = crd.accuracy;
+  // }
 
 
   function error(err) {
@@ -49,19 +49,19 @@ $(document).ready(function(){
 
 
   // zipcode reverse geocoding
-  function display() {
-    mapsQueryURL = "https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat="+lat+"&lon="+lon+"";
+  // function display() {
+  //   mapsQueryURL = "https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat="+lat+"&lon="+lon+"";
 
-    $.ajax({
-      url: mapsQueryURL,
-      method: "GET"
-    }).then(function(mapsResponse) {
-      postCode = mapsResponse.address.postcode;
-      console.log(postCode);
-      $("#zipCode").attr("value", postCode);
+  //   $.ajax({
+  //     url: mapsQueryURL,
+  //     method: "GET"
+  //   }).then(function(mapsResponse) {
+  //     postCode = mapsResponse.address.postcode;
+  //     console.log(postCode);
+  //     $("#zipCode").attr("value", postCode);
 
-    })
-  }
+  //   })
+  // }
 
   // zipcode geocoding
   function getLocation(zipCode) {
@@ -75,14 +75,17 @@ $(document).ready(function(){
       console.log(response);
       lat = response.results[0].geometry.location.lat;
       lon = response.results[0].geometry.location.lng;
-      console.log("Lat: " +lat +", Lon" + lon);
     })
+    return lat, lon;
   }
-
+  
+  
   
   // code for constellation
-  function virtualSky(){
+  function virtualSky(lat, lon){
+    var responsiveEmbed = $("<div class='embed-responsive embed-responsive-21by9' id='moonPhases'></div>")
     var vSky = $("<iframe width='900' height='385' frameborder='0' scrolling='no' marginheight='' marginwidth='' src='https://virtualsky.lco.global/embed/index.html?longitude="+lon+"&latitude="+lat+"&projection=gnomic&constellations=true&constellationlabels=true&showplanetlabels=true&meridian=true' allowTransparency='true'></iframe>")
+    $("#constellations").html(responsiveEmbed);
     $("#moonPhases").html(vSky);
   }
 
@@ -176,21 +179,7 @@ $(document).ready(function(){
 
   // EVENTS
   // ---------------------------------------------------------
-  // run geolocation code. success, failure, and the last argument failure.
-  navigator.geolocation.getCurrentPosition(success, error, options);
 
-  var today = moment().format("YYYY-MM-DD");
-  
-  $("#zipCode").attr("placeholder", "Determining Location...");
-  
-  setTimeout(display, 12000);
-  
-  //changes "determining location" to "Enter Zipcode" after determining location is called
-  //displays "Date" and "Enter Zipcode" at the same time
-  setTimeout(function() {
-    $("#date").attr("value", today);
-    $("#zipCode").attr("placeholder", "Enter Zipcode");
-  }, 12000);
 
   $(".hidden").hide();
 
@@ -201,30 +190,42 @@ $(document).ready(function(){
 
   // var with date to pass into api parameters
   $('#submitButton').on('click', function(e) {
+    e.preventDefault();
+
     var userLocation = $("#zipCode").val().toString();
 
     runInitialize++;
-    e.preventDefault();
-    $(".hidden").show();
-
+    
+    
     //move intro area to top
     $("#introArea").css("padding", "0");
     $("#introArea").css("transition","1s");
-
+    
     // Add to clickCounter
     clickCounter++;
-
+    
     //  Store Click Data to Firebase in a JSON property called clickCount
     database.ref().set({
       clickCount: clickCounter
     });
-
-    getLocation(userLocation);
-
-    virtualSky();
-
+    
     getWeather(userLocation);
     
+    getLocation(userLocation);
+
+    // Timeout for Google Geo API Call
+    var loadingGif = $("<img>");
+
+    $("#constellations").html(loadingGif);
+    loadingGif.attr("src", "images/Spinner-1s-200px.gif");
+    loadingGif.attr("alt", "Loading Gif");
+
+    setTimeout(function(){
+      virtualSky(lat, lon);
+    }, 500);
+    
+    $(".hidden").show();
+
     if (runInitialize < 2){
       initialize();
     }
