@@ -25,8 +25,6 @@ $(document).ready(function(){
     storageBucket: "fir-click-counter-7cdb9.appspot.com"
   };
   
-  // var date = $('#date').val().toString();
-  // var date2 = moment(date).format('MM/DD/YYYY');
   // another var for iframe star chart date*
   
 
@@ -179,7 +177,6 @@ $(document).ready(function(){
 
   // EVENTS
   // ---------------------------------------------------------
-
 
   $(".hidden").hide();
 
