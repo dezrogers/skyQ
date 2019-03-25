@@ -47,13 +47,12 @@
                 <div class="col-md-8">
                     <form>
                         <div class="form-row text-center">
+                            <div class="col-md-5">
+                                <p>Enter your zipcode to see your current sky conditions</p>
+                            </div>
                             <div class="col-md-5 form-group">
                                 <!-- <label for="zipCode">Zip Code</label> -->
                                 <input type="number" class="form-control" id="zipCode" placeholder="">
-                            </div>
-                            <div class="col-md-5 form-group">
-                                <!-- <label for="date">Date</label> -->
-                                <input type="date" class="form-control" id="date" placeholder="">
                             </div>
                             <div class="col-md-2">
                                 <button type="button" id="submitButton"
@@ -96,7 +95,7 @@
                 <div class="row">
                     <div class="col-md-3"></div>
                     <div class="col-md-6 text-center mt-3" id="weather-table">
-                        <table class="table text-light table-responsive-md">
+                        <table class="table text-light table-responsive-md text-center">
                             <thead>
                                 <tr class="">
                                     <th scope="col">Temp</th>

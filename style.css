@@ -9,12 +9,17 @@ body {
 }
 
 /* Header */
-h1 {
+#titletext {
     text-align: center;
     color: white;
     margin-bottom: 1rem;
 }
 
+h1 {
+    text-align: center;
+    color: white;
+    margin-bottom: 0px;
+}
 
 
 .topText{
@@ -37,6 +42,12 @@ h1 {
 
 
 /* Input Bar */
+p {
+    color: white;
+    font-family:'Montserrat', sans-serif;
+    font-weight: bold;
+}
+
 #submitButton {
     background-color: rgba(0, 0, 0, 0.705);
     border-color: rgba(255, 255, 255, 0.438);
@@ -102,6 +113,7 @@ h2 {
     line-height: 1;
     border-radius: 25px;
     margin-bottom: 20px;
+    padding: 25px 0px;
 }
 
 #moonPhases {
