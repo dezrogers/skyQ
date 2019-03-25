@@ -47,13 +47,12 @@
                 <div class="col-md-8">
                     <form>
                         <div class="form-row text-center">
-                            <div class="col-md-5 form-group">
-                                <!-- <label for="zipCode">Zip Code</label> -->
-                                <input type="number" class="form-control" id="zipCode" placeholder="">
+                            <div class="col-md-5">
+                                <p>Enter your zipcode to see your current sky conditions.</p>
                             </div>
                             <div class="col-md-5 form-group">
-                                <!-- <label for="date">Date</label> -->
-                                <input type="date" class="form-control" id="date" placeholder="">
+                                <!-- <label for="zipCode">Zip Code</label> -->
+                                <input type="number" class="form-control" id="zipCode" placeholder="Zip Code">
                             </div>
                             <div class="col-md-2">
                                 <button type="button" id="submitButton"
@@ -75,8 +74,8 @@
             <div class="col-md-1"></div>
         </div>   
 
-        <div class="row my-3" id="planets">
-            <div class="col-md-12 p-3 hidden content">
+        <div class="row my-3 content" id="planets">
+            <div class="col-md-12 p-3 hidden">
                 <div class="embed-responsive embed-responsive-21by9" id="moonPhases"></div>
             </div>
         </div>

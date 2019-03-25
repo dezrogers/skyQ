@@ -25,8 +25,6 @@ $(document).ready(function(){
     storageBucket: "fir-click-counter-7cdb9.appspot.com"
   };
   
-  var date = $('#date').val().toString();
-  var date2 = moment(date).format('MM/DD/YYYY');
   // another var for iframe star chart date*
   
 
@@ -178,19 +176,10 @@ $(document).ready(function(){
   // ---------------------------------------------------------
   // run geolocation code. success, failure, and the last argument failure.
   navigator.geolocation.getCurrentPosition(success, error, options);
-
-  var today = moment().format("YYYY-MM-DD");
-  
-  $("#zipCode").attr("placeholder", "Determining Location...");
   
   setTimeout(display, 12000);
   
-  //changes "determining location" to "Enter Zipcode" after determining location is called
   //displays "Date" and "Enter Zipcode" at the same time
-  setTimeout(function() {
-    $("#date").attr("value", today);
-    $("#zipCode").attr("placeholder", "Enter Zipcode");
-  }, 12000);
 
   $(".hidden").hide();
 
