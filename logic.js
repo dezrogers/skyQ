@@ -177,15 +177,9 @@ $(document).ready(function(){
   // run geolocation code. success, failure, and the last argument failure.
   navigator.geolocation.getCurrentPosition(success, error, options);
   
-  $("#zipCode").attr("placeholder", "Determining Location...");
-  
   setTimeout(display, 12000);
   
-  //changes "determining location" to "Enter Zipcode" after determining location is called
   //displays "Date" and "Enter Zipcode" at the same time
-  setTimeout(function() {
-    $("#zipCode").attr("placeholder", "Enter Zipcode");
-  }, 12000);
 
   $(".hidden").hide();
 
